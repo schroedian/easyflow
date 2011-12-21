@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow"
+    nsURI="ns_uri" nsPrefix="ns_prefix">
+  <eClassifiers xsi:type="ecore:EClass" name="Workflow">
+    <eOperations name="initDag"/>
+    <eOperations name="generateDag"/>
+    <eOperations name="writeMakeflow"/>
+    <eOperations name="writeAWSCloudFormation"/>
+    <eOperations name="readWorkflowTemplate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dag" eType="#//Dag"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="workflowTemplateFileName"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metadataFileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="WorkflowTemplate" eType="#//EasyFlowTemplate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Configuration" eType="#//EasyFlowConfiguration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Metadata" eType="#//EasyFlowMetadata"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ImplementationTemplate"
+        eType="#//EasyFlowImplementationTemplate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="DataProcessingType" eType="#//DataProcessingType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="WorkflowUtil" eType="#//WorkflowUtil"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Task">
+    <eOperations name="readTask">
+      <eParameters name="wtplLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getFilesIn" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="dataFormatIn" eType="#//DataFormat"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataCriterion" upperBound="-1"
+        eType="#//DataCriterion"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataFormatIn" upperBound="-1"
+        eType="#//DataFormat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataFormatOut" upperBound="-1"
+        eType="#//DataFormat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinalityIn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinalityOut" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMultipleInstanceOfDataCriterion"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="defines whether the task is able to process multiple Instances of the given DataCriterion at the same time. E.g.: LocalRealigner can process multiple samples at the same time.&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="splitCriterion" upperBound="-1"
+        eType="#//SplitCriterion"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="TraversalCriterion" upperBound="-1"
+        eType="#//TraversalCriterion"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentTasks" upperBound="-1"
+        eType="#//Task"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EasyFlowTemplate">
+    <eOperations name="templateFileParser"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EasyFlowConfiguration">
+    <eOperations name="configFileReader"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EasyFlowMetadata">
+    <eOperations name="metadataFileReader"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataProcessingType">
+    <eOperations name="isConvertableTo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="dataProcessingTypeOut" eType="#//DataProcessingType"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataFormatIn" eType="#//DataFormat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataFormatOut" eType="#//DataFormat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DataFormat">
+    <eLiterals name="None" value="14"/>
+    <eLiterals name="FASTQ"/>
+    <eLiterals name="SAM" value="1"/>
+    <eLiterals name="BAM" value="2"/>
+    <eLiterals name="VCF" value="3"/>
+    <eLiterals name="BCF" value="4"/>
+    <eLiterals name="TXT" value="5"/>
+    <eLiterals name="CSV" value="6"/>
+    <eLiterals name="BAI" value="7"/>
+    <eLiterals name="SAI" value="8"/>
+    <eLiterals name="VCF_IDX" value="9"/>
+    <eLiterals name="FASTA" value="10"/>
+    <eLiterals name="BWT" value="11"/>
+    <eLiterals name="DICT" value="12"/>
+    <eLiterals name="FAI" value="13"/>
+    <eLiterals name="IntervalList" value="15"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DataCriterion">
+    <eLiterals name="ReadGroup"/>
+    <eLiterals name="Sample" value="1"/>
+    <eLiterals name="Library" value="2"/>
+    <eLiterals name="None" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Dag" instanceClassName="org.jgrapht.graph.ListenableDirectedGraph"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="TraversalCriterion">
+    <eLiterals name="Locus"/>
+    <eLiterals name="Read" value="1"/>
+    <eLiterals name="None" value="2"/>
+    <eLiterals name="ReadPair" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SplitCriterion">
+    <eLiterals name="Contig"/>
+    <eLiterals name="Interval" value="1"/>
+    <eLiterals name="Read" value="2"/>
+    <eLiterals name="Library" value="3"/>
+    <eLiterals name="Sample" value="4"/>
+    <eLiterals name="ReadGroup" value="5"/>
+    <eLiterals name="None" value="6"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EasyFlowImplementationTemplate">
+    <eOperations name="templateFileParser"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataProcessingTypeToTask" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//DataProcessingType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Task"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WorkflowUtil">
+    <eOperations name="getAllTasks" upperBound="-1" eType="#//Task"/>
+    <eOperations name="getTasksFromLastTaskClass" upperBound="-1" eType="#//Task">
+      <eParameters name="dataFormatIn">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+          <eTypeArguments eClassifier="#//DataFormat"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters name="dataFormatOut">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+          <eTypeArguments eClassifier="#//DataFormat"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="getTaskFromLastTaskClassMap" eType="#//Task">
+      <eParameters name="dataProcessingTypeIn" eType="#//DataProcessingType"/>
+    </eOperations>
+    <eOperations name="updateLastTaskClass">
+      <eParameters name="dataFormatIn">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+          <eTypeArguments eClassifier="#//DataFormat"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters name="dataFormatOut">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+          <eTypeArguments eClassifier="#//DataFormat"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters name="task" eType="#//Task"/>
+    </eOperations>
+    <eOperations name="updateLastTaskClassMap">
+      <eParameters name="dataProcessingType" eType="#//DataProcessingType"/>
+      <eParameters name="task" eType="#//Task"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="LastTaskClassMap" upperBound="-1"
+        eType="#//DataProcessingTypeToTask" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

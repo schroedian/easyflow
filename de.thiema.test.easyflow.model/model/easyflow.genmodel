@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.thiema.test.easyflow.model/src"
+    modelPluginID="de.thiema.test.easyflow.model" modelName="Easyflow" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>easyflow.ecore</foreignModel>
+  <genPackages prefix="Easyflow" disposableProviderFactory="true" ecorePackage="easyflow.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="easyflow.ecore#//DataFormat">
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/None"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/FASTQ"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/SAM"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/BAM"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/VCF"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/BCF"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/TXT"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/CSV"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/BAI"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/SAI"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/VCF_IDX"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/FASTA"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/BWT"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/DICT"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/FAI"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataFormat/IntervalList"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="easyflow.ecore#//DataCriterion">
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataCriterion/ReadGroup"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataCriterion/Sample"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataCriterion/Library"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//DataCriterion/None"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="easyflow.ecore#//TraversalCriterion">
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//TraversalCriterion/Locus"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//TraversalCriterion/Read"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//TraversalCriterion/None"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//TraversalCriterion/ReadPair"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="easyflow.ecore#//SplitCriterion">
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//SplitCriterion/Contig"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//SplitCriterion/Interval"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//SplitCriterion/Read"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//SplitCriterion/Library"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//SplitCriterion/Sample"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//SplitCriterion/ReadGroup"/>
+      <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//SplitCriterion/None"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="easyflow.ecore#//Dag"/>
+    <genClasses ecoreClass="easyflow.ecore#//Workflow">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Workflow/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Workflow/dag"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Workflow/workflowTemplateFileName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Workflow/metadataFileName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//Workflow/WorkflowTemplate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//Workflow/Configuration"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//Workflow/Metadata"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//Workflow/ImplementationTemplate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//Workflow/DataProcessingType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//Workflow/WorkflowUtil"/>
+      <genOperations ecoreOperation="easyflow.ecore#//Workflow/initDag"/>
+      <genOperations ecoreOperation="easyflow.ecore#//Workflow/generateDag"/>
+      <genOperations ecoreOperation="easyflow.ecore#//Workflow/writeMakeflow"/>
+      <genOperations ecoreOperation="easyflow.ecore#//Workflow/writeAWSCloudFormation"/>
+      <genOperations ecoreOperation="easyflow.ecore#//Workflow/readWorkflowTemplate"/>
+    </genClasses>
+    <genClasses ecoreClass="easyflow.ecore#//Task">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/dataCriterion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/dataFormatIn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/dataFormatOut"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/cardinalityIn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/cardinalityOut"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/isMultipleInstanceOfDataCriterion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/splitCriterion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//Task/TraversalCriterion"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//Task/parentTasks"/>
+      <genOperations ecoreOperation="easyflow.ecore#//Task/readTask">
+        <genParameters ecoreParameter="easyflow.ecore#//Task/readTask/wtplLine"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="easyflow.ecore#//EasyFlowTemplate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//EasyFlowTemplate/fileName"/>
+      <genOperations ecoreOperation="easyflow.ecore#//EasyFlowTemplate/templateFileParser"/>
+    </genClasses>
+    <genClasses ecoreClass="easyflow.ecore#//EasyFlowConfiguration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//EasyFlowConfiguration/fileName"/>
+      <genOperations ecoreOperation="easyflow.ecore#//EasyFlowConfiguration/configFileReader"/>
+    </genClasses>
+    <genClasses ecoreClass="easyflow.ecore#//EasyFlowMetadata">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//EasyFlowMetadata/fileName"/>
+      <genOperations ecoreOperation="easyflow.ecore#//EasyFlowMetadata/metadataFileReader"/>
+    </genClasses>
+    <genClasses ecoreClass="easyflow.ecore#//DataProcessingType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//DataProcessingType/dataFormatIn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//DataProcessingType/dataFormatOut"/>
+      <genOperations ecoreOperation="easyflow.ecore#//DataProcessingType/isConvertableTo">
+        <genParameters ecoreParameter="easyflow.ecore#//DataProcessingType/isConvertableTo/dataProcessingTypeOut"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="easyflow.ecore#//EasyFlowImplementationTemplate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//EasyFlowImplementationTemplate/fileName"/>
+      <genOperations ecoreOperation="easyflow.ecore#//EasyFlowImplementationTemplate/templateFileParser"/>
+    </genClasses>
+    <genClasses ecoreClass="easyflow.ecore#//DataProcessingTypeToTask">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//DataProcessingTypeToTask/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference easyflow.ecore#//DataProcessingTypeToTask/value"/>
+    </genClasses>
+    <genClasses ecoreClass="easyflow.ecore#//WorkflowUtil">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//WorkflowUtil/LastTaskClassMap"/>
+      <genOperations ecoreOperation="easyflow.ecore#//WorkflowUtil/getAllTasks"/>
+      <genOperations ecoreOperation="easyflow.ecore#//WorkflowUtil/getTasksFromLastTaskClass">
+        <genParameters ecoreParameter="easyflow.ecore#//WorkflowUtil/getTasksFromLastTaskClass/dataFormatIn"/>
+      </genOperations>
+      <genOperations ecoreOperation="easyflow.ecore#//WorkflowUtil/getTaskFromLastTaskClassMap">
+        <genParameters ecoreParameter="easyflow.ecore#//WorkflowUtil/getTaskFromLastTaskClassMap/dataProcessingTypeIn"/>
+      </genOperations>
+      <genOperations ecoreOperation="easyflow.ecore#//WorkflowUtil/updateLastTaskClass">
+        <genParameters ecoreParameter="easyflow.ecore#//WorkflowUtil/updateLastTaskClass/dataFormatIn"/>
+        <genParameters ecoreParameter="easyflow.ecore#//WorkflowUtil/updateLastTaskClass/dataFormatOut"/>
+        <genParameters ecoreParameter="easyflow.ecore#//WorkflowUtil/updateLastTaskClass/task"/>
+      </genOperations>
+      <genOperations ecoreOperation="easyflow.ecore#//WorkflowUtil/updateLastTaskClassMap">
+        <genParameters ecoreParameter="easyflow.ecore#//WorkflowUtil/updateLastTaskClassMap/dataProcessingType"/>
+        <genParameters ecoreParameter="easyflow.ecore#//WorkflowUtil/updateLastTaskClassMap/task"/>
+      </genOperations>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
