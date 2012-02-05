@@ -11,16 +11,19 @@
     <eOperations name="readWorkflowTemplate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dag" eType="#//Dag"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="workflowTemplateFileName"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metadataFileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="WorkflowTemplate" eType="#//EasyFlowTemplate"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Configuration" eType="#//EasyFlowConfiguration"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Metadata" eType="#//EasyFlowMetadata"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="WorkflowTemplate" eType="#//EasyFlowTemplate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Configuration" eType="#//EasyFlowConfiguration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Metadata" eType="#//EasyFlowMetadata"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ImplementationTemplate"
-        eType="#//EasyFlowImplementationTemplate"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="DataProcessingType" eType="#//DataProcessingType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="WorkflowUtil" eType="#//WorkflowUtil"/>
+        eType="#//EasyFlowImplementationTemplate" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="DataProcessingType" eType="#//DataProcessingType"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="WorkflowUtil" eType="#//IWorkflowUtil"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="LastTaskClassMap" upperBound="-1"
+        eType="#//DataProcessingTypeToTask" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Task">
     <eOperations name="readTask">
@@ -30,14 +33,14 @@
       <eParameters name="dataFormatIn" eType="#//DataFormat"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataCriterion" upperBound="-1"
-        eType="#//DataCriterion"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataFormatIn" upperBound="-1"
         eType="#//DataFormat"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataFormatOut" upperBound="-1"
         eType="#//DataFormat"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinalityIn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinalityOut" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataCriterion" upperBound="-1"
+        eType="#//DataCriterion"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMultipleInstanceOfDataCriterion"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -48,16 +51,34 @@
         eType="#//SplitCriterion"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="TraversalCriterion" upperBound="-1"
         eType="#//TraversalCriterion"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="" upperBound="-1" eType="#//CommandLine"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentTasks" upperBound="-1"
-        eType="#//Task"/>
+        eType="#//Task" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tool" upperBound="-1" eType="#//Tool"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contrast" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EasyFlowTemplate">
-    <eOperations name="templateFileParser"/>
+    <eOperations name="generateDAGFromTemplateFile" eType="#//Dag">
+      <eParameters name="lastTaskClassMap">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="#//DataProcessingType"/>
+          <eTypeArguments eClassifier="#//Task"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EasyFlowConfiguration">
     <eOperations name="configFileReader"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="configMap" transient="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eGenericType>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EasyFlowMetadata">
     <eOperations name="metadataFileReader"/>
@@ -111,14 +132,28 @@
     <eLiterals name="None" value="6"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EasyFlowImplementationTemplate">
-    <eOperations name="templateFileParser"/>
+    <eOperations name="templateFileParser">
+      <eParameters name="dag" eType="#//Dag"/>
+    </eOperations>
+    <eOperations name="readParameterConfig">
+      <eParameters name="toolName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="initJsonRootNode"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameterFileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameterConfigMap" transient="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jsonRootNode" eType="#//JsonRootNode"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DataProcessingTypeToTask" instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//DataProcessingType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Task"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="WorkflowUtil">
+  <eClassifiers xsi:type="ecore:EClass" name="IWorkflowUtil" abstract="true" interface="true">
     <eOperations name="getAllTasks" upperBound="-1" eType="#//Task"/>
     <eOperations name="getTasksFromLastTaskClass" upperBound="-1" eType="#//Task">
       <eParameters name="dataFormatIn">
@@ -131,9 +166,21 @@
           <eTypeArguments eClassifier="#//DataFormat"/>
         </eGenericType>
       </eParameters>
+      <eParameters name="lastTaskClassMap">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="#//DataProcessingType"/>
+          <eTypeArguments eClassifier="#//Task"/>
+        </eGenericType>
+      </eParameters>
     </eOperations>
     <eOperations name="getTaskFromLastTaskClassMap" eType="#//Task">
       <eParameters name="dataProcessingTypeIn" eType="#//DataProcessingType"/>
+      <eParameters name="lastTaskClassMap">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="#//DataProcessingType"/>
+          <eTypeArguments eClassifier="#//Task"/>
+        </eGenericType>
+      </eParameters>
     </eOperations>
     <eOperations name="updateLastTaskClass">
       <eParameters name="dataFormatIn">
@@ -147,12 +194,108 @@
         </eGenericType>
       </eParameters>
       <eParameters name="task" eType="#//Task"/>
+      <eParameters name="lastTaskClassMap">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="#//DataProcessingType"/>
+          <eTypeArguments eClassifier="#//Task"/>
+        </eGenericType>
+      </eParameters>
     </eOperations>
     <eOperations name="updateLastTaskClassMap">
       <eParameters name="dataProcessingType" eType="#//DataProcessingType"/>
       <eParameters name="task" eType="#//Task"/>
+      <eParameters name="lastTaskClassMap">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="#//DataProcessingType"/>
+          <eTypeArguments eClassifier="#//Task"/>
+        </eGenericType>
+      </eParameters>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="LastTaskClassMap" upperBound="-1"
-        eType="#//DataProcessingTypeToTask" containment="true"/>
+    <eOperations name="addTaskListToDAG">
+      <eParameters name="dag" eType="#//Dag"/>
+      <eParameters name="lastTasks">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+          <eTypeArguments eClassifier="#//Task"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters name="curTask" eType="#//Task"/>
+    </eOperations>
+    <eOperations name="getTaskByName">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+        <eTypeArguments eClassifier="#//Task"/>
+      </eGenericType>
+      <eParameters name="taskSet" eType="#//ESet"/>
+      <eParameters name="rawTaskNames" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="printLastTaskClassMap">
+      <eParameters name="lastTaskClassMap">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="#//DataProcessingType"/>
+          <eTypeArguments eClassifier="#//Task"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CommandLine">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredArg" upperBound="-1"
+        eType="#//CommandArgument"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CommandArgument">
+    <eOperations name="setCmdProperties">
+      <eParameters name="parameterConfigMap">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="arg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="named" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Tool" eSuperTypes="#//Task">
+    <eOperations name="printCommandLine" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argIn" upperBound="-1"
+        eType="#//CommandArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argOut" upperBound="-1"
+        eType="#//CommandArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="optionalArg" upperBound="-1"
+        eType="#//CommandArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subCmd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Argument">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="arg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CSV"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ESet" instanceClassName="java.util.Set"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EdgeFactory" instanceClassName="org.jgrapht.EdgeFactory"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="JsonRootNode" instanceClassName="argo.jdom.JsonRootNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Group">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contrast"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contains" upperBound="-1"
+        eType="#//Sample" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Sample">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="belongsTo" upperBound="-1"
+        eType="#//ReadGroup" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Library">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="produces" upperBound="-1"
+        eType="#//Sample" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReadGroup">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="belongsTo" upperBound="-1"
+        eType="#//Sample" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>
