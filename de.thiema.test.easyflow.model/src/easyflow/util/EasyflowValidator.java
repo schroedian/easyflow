@@ -108,8 +108,6 @@ public class EasyflowValidator extends EObjectValidator {
 				return validateEasyFlowImplementationTemplate((EasyFlowImplementationTemplate)value, diagnostics, context);
 			case EasyflowPackage.DATA_PROCESSING_TYPE_TO_TASK:
 				return validateDataProcessingTypeToTask((Map.Entry<?, ?>)value, diagnostics, context);
-			case EasyflowPackage.WORKFLOW_UTIL:
-				return validateWorkflowUtil((WorkflowUtil)value, diagnostics, context);
 			case EasyflowPackage.DATA_FORMAT:
 				return validateDataFormat((DataFormat)value, diagnostics, context);
 			case EasyflowPackage.DATA_CRITERION:
@@ -195,15 +193,6 @@ public class EasyflowValidator extends EObjectValidator {
 	 */
 	public boolean validateDataProcessingTypeToTask(Map.Entry<?, ?> dataProcessingTypeToString, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint((EObject)dataProcessingTypeToString, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateWorkflowUtil(WorkflowUtil workflowUtil, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(workflowUtil, diagnostics, context);
 	}
 
 	/**

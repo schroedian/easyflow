@@ -6,15 +6,22 @@
  */
 package easyflow.impl;
 
+import argo.jdom.JsonRootNode;
+import easyflow.Argument;
+import easyflow.CSV;
+import easyflow.CommandArgument;
+import easyflow.CommandLine;
 import easyflow.*;
 import java.util.Map;
 
+import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.ListenableDirectedGraph;
 
 import easyflow.DataCriterion;
@@ -28,9 +35,10 @@ import easyflow.EasyflowFactory;
 import easyflow.EasyflowPackage;
 import easyflow.SplitCriterion;
 import easyflow.Task;
+import easyflow.Tool;
 import easyflow.TraversalCriterion;
 import easyflow.Workflow;
-import easyflow.WorkflowUtil;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -84,7 +92,11 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 			case EasyflowPackage.DATA_PROCESSING_TYPE: return createDataProcessingType();
 			case EasyflowPackage.EASY_FLOW_IMPLEMENTATION_TEMPLATE: return createEasyFlowImplementationTemplate();
 			case EasyflowPackage.DATA_PROCESSING_TYPE_TO_TASK: return (EObject)createDataProcessingTypeToTask();
-			case EasyflowPackage.WORKFLOW_UTIL: return createWorkflowUtil();
+			case EasyflowPackage.COMMAND_LINE: return createCommandLine();
+			case EasyflowPackage.COMMAND_ARGUMENT: return createCommandArgument();
+			case EasyflowPackage.TOOL: return createTool();
+			case EasyflowPackage.ARGUMENT: return createArgument();
+			case EasyflowPackage.CSV: return createCSV();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -108,6 +120,12 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createSplitCriterionFromString(eDataType, initialValue);
 			case EasyflowPackage.DAG:
 				return createDagFromString(eDataType, initialValue);
+			case EasyflowPackage.ESET:
+				return createESetFromString(eDataType, initialValue);
+			case EasyflowPackage.EDGE_FACTORY:
+				return createEdgeFactoryFromString(eDataType, initialValue);
+			case EasyflowPackage.JSON_ROOT_NODE:
+				return createJsonRootNodeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -131,6 +149,12 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertSplitCriterionToString(eDataType, instanceValue);
 			case EasyflowPackage.DAG:
 				return convertDagToString(eDataType, instanceValue);
+			case EasyflowPackage.ESET:
+				return convertESetToString(eDataType, instanceValue);
+			case EasyflowPackage.EDGE_FACTORY:
+				return convertEdgeFactoryToString(eDataType, instanceValue);
+			case EasyflowPackage.JSON_ROOT_NODE:
+				return convertJsonRootNodeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -221,9 +245,49 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WorkflowUtil createWorkflowUtil() {
-		WorkflowUtilImpl workflowUtil = new WorkflowUtilImpl();
-		return workflowUtil;
+	public CommandLine createCommandLine() {
+		CommandLineImpl commandLine = new CommandLineImpl();
+		return commandLine;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CommandArgument createCommandArgument() {
+		CommandArgumentImpl commandArgument = new CommandArgumentImpl();
+		return commandArgument;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Tool createTool() {
+		ToolImpl tool = new ToolImpl();
+		return tool;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Argument createArgument() {
+		ArgumentImpl argument = new ArgumentImpl();
+		return argument;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CSV createCSV() {
+		CSVImpl csv = new CSVImpl();
+		return csv;
 	}
 
 	/**
@@ -321,6 +385,60 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertDagToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Set createESetFromString(EDataType eDataType, String initialValue) {
+		return (Set)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertESetToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EdgeFactory createEdgeFactoryFromString(EDataType eDataType, String initialValue) {
+		return (EdgeFactory)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertEdgeFactoryToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JsonRootNode createJsonRootNodeFromString(EDataType eDataType, String initialValue) {
+		return (JsonRootNode)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertJsonRootNodeToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

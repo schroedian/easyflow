@@ -106,8 +106,28 @@ public class EasyflowAdapterFactory extends AdapterFactoryImpl {
 				return createDataProcessingTypeToTaskAdapter();
 			}
 			@Override
-			public Adapter caseWorkflowUtil(WorkflowUtil object) {
-				return createWorkflowUtilAdapter();
+			public Adapter caseIWorkflowUtil(IWorkflowUtil object) {
+				return createIWorkflowUtilAdapter();
+			}
+			@Override
+			public Adapter caseCommandLine(CommandLine object) {
+				return createCommandLineAdapter();
+			}
+			@Override
+			public Adapter caseCommandArgument(CommandArgument object) {
+				return createCommandArgumentAdapter();
+			}
+			@Override
+			public Adapter caseTool(Tool object) {
+				return createToolAdapter();
+			}
+			@Override
+			public Adapter caseArgument(Argument object) {
+				return createArgumentAdapter();
+			}
+			@Override
+			public Adapter caseCSV(CSV object) {
+				return createCSVAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -242,16 +262,86 @@ public class EasyflowAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.WorkflowUtil <em>Workflow Util</em>}'.
+	 * Creates a new adapter for an object of class '{@link easyflow.IWorkflowUtil <em>IWorkflow Util</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see easyflow.WorkflowUtil
+	 * @see easyflow.IWorkflowUtil
 	 * @generated
 	 */
-	public Adapter createWorkflowUtilAdapter() {
+	public Adapter createIWorkflowUtilAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.CommandLine <em>Command Line</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.CommandLine
+	 * @generated
+	 */
+	public Adapter createCommandLineAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.CommandArgument <em>Command Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.CommandArgument
+	 * @generated
+	 */
+	public Adapter createCommandArgumentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.Tool <em>Tool</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.Tool
+	 * @generated
+	 */
+	public Adapter createToolAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.Argument <em>Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.Argument
+	 * @generated
+	 */
+	public Adapter createArgumentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.CSV <em>CSV</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.CSV
+	 * @generated
+	 */
+	public Adapter createCSVAdapter() {
 		return null;
 	}
 

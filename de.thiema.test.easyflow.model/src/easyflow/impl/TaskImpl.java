@@ -6,6 +6,7 @@
  */
 package easyflow.impl;
 
+import easyflow.CommandLine;
 import easyflow.DataCriterion;
 import easyflow.DataFormat;
 import easyflow.EasyflowPackage;
@@ -18,14 +19,18 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,14 +40,15 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.impl.TaskImpl#getName <em>Name</em>}</li>
- *   <li>{@link easyflow.impl.TaskImpl#getDataCriterion <em>Data Criterion</em>}</li>
  *   <li>{@link easyflow.impl.TaskImpl#getDataFormatIn <em>Data Format In</em>}</li>
  *   <li>{@link easyflow.impl.TaskImpl#getDataFormatOut <em>Data Format Out</em>}</li>
  *   <li>{@link easyflow.impl.TaskImpl#getCardinalityIn <em>Cardinality In</em>}</li>
  *   <li>{@link easyflow.impl.TaskImpl#getCardinalityOut <em>Cardinality Out</em>}</li>
+ *   <li>{@link easyflow.impl.TaskImpl#getDataCriterion <em>Data Criterion</em>}</li>
  *   <li>{@link easyflow.impl.TaskImpl#getIsMultipleInstanceOfDataCriterion <em>Is Multiple Instance Of Data Criterion</em>}</li>
  *   <li>{@link easyflow.impl.TaskImpl#getSplitCriterion <em>Split Criterion</em>}</li>
  *   <li>{@link easyflow.impl.TaskImpl#getTraversalCriterion <em>Traversal Criterion</em>}</li>
+ *   <li>{@link easyflow.impl.TaskImpl#getCommandLine <em>Command Line</em>}</li>
  *   <li>{@link easyflow.impl.TaskImpl#getParentTasks <em>Parent Tasks</em>}</li>
  * </ul>
  * </p>
@@ -69,16 +75,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getDataCriterion() <em>Data Criterion</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDataCriterion()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<DataCriterion> dataCriterion;
 
 	/**
 	 * The cached value of the '{@link #getDataFormatIn() <em>Data Format In</em>}' attribute list.
@@ -141,6 +137,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected short cardinalityOut = CARDINALITY_OUT_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getDataCriterion() <em>Data Criterion</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataCriterion()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<DataCriterion> dataCriterion;
+
+	/**
 	 * The default value of the '{@link #getIsMultipleInstanceOfDataCriterion() <em>Is Multiple Instance Of Data Criterion</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -181,7 +187,17 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EList<TraversalCriterion> traversalCriterion;
 
 	/**
-	 * The cached value of the '{@link #getParentTasks() <em>Parent Tasks</em>}' reference list.
+	 * The cached value of the '{@link #getCommandLine() <em>Command Line</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCommandLine()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<CommandLine> commandLine;
+
+	/**
+	 * The cached value of the '{@link #getParentTasks() <em>Parent Tasks</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getParentTasks()
@@ -362,9 +378,21 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public EList<Task> getParentTasks() {
 		if (parentTasks == null) {
-			parentTasks = new EObjectResolvingEList<Task>(Task.class, this, EasyflowPackage.TASK__PARENT_TASKS);
+			parentTasks = new EObjectContainmentEList<Task>(Task.class, this, EasyflowPackage.TASK__PARENT_TASKS);
 		}
 		return parentTasks;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<CommandLine> getCommandLine() {
+		if (commandLine == null) {
+			commandLine = new EObjectContainmentEList<CommandLine>(CommandLine.class, this, EasyflowPackage.TASK__COMMAND_LINE);
+		}
+		return commandLine;
 	}
 
 	/**
@@ -414,13 +442,38 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getFilesIn(DataFormat dataFormatIn) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case EasyflowPackage.TASK__COMMAND_LINE:
+				return ((InternalEList<?>)getCommandLine()).basicRemove(otherEnd, msgs);
+			case EasyflowPackage.TASK__PARENT_TASKS:
+				return ((InternalEList<?>)getParentTasks()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case EasyflowPackage.TASK__NAME:
 				return getName();
-			case EasyflowPackage.TASK__DATA_CRITERION:
-				return getDataCriterion();
 			case EasyflowPackage.TASK__DATA_FORMAT_IN:
 				return getDataFormatIn();
 			case EasyflowPackage.TASK__DATA_FORMAT_OUT:
@@ -429,12 +482,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getCardinalityIn();
 			case EasyflowPackage.TASK__CARDINALITY_OUT:
 				return getCardinalityOut();
+			case EasyflowPackage.TASK__DATA_CRITERION:
+				return getDataCriterion();
 			case EasyflowPackage.TASK__IS_MULTIPLE_INSTANCE_OF_DATA_CRITERION:
 				return getIsMultipleInstanceOfDataCriterion();
 			case EasyflowPackage.TASK__SPLIT_CRITERION:
 				return getSplitCriterion();
 			case EasyflowPackage.TASK__TRAVERSAL_CRITERION:
 				return getTraversalCriterion();
+			case EasyflowPackage.TASK__COMMAND_LINE:
+				return getCommandLine();
 			case EasyflowPackage.TASK__PARENT_TASKS:
 				return getParentTasks();
 		}
@@ -453,10 +510,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case EasyflowPackage.TASK__NAME:
 				setName((String)newValue);
 				return;
-			case EasyflowPackage.TASK__DATA_CRITERION:
-				getDataCriterion().clear();
-				getDataCriterion().addAll((Collection<? extends DataCriterion>)newValue);
-				return;
 			case EasyflowPackage.TASK__DATA_FORMAT_IN:
 				getDataFormatIn().clear();
 				getDataFormatIn().addAll((Collection<? extends DataFormat>)newValue);
@@ -471,6 +524,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case EasyflowPackage.TASK__CARDINALITY_OUT:
 				setCardinalityOut((Short)newValue);
 				return;
+			case EasyflowPackage.TASK__DATA_CRITERION:
+				getDataCriterion().clear();
+				getDataCriterion().addAll((Collection<? extends DataCriterion>)newValue);
+				return;
 			case EasyflowPackage.TASK__IS_MULTIPLE_INSTANCE_OF_DATA_CRITERION:
 				setIsMultipleInstanceOfDataCriterion((Boolean)newValue);
 				return;
@@ -481,6 +538,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case EasyflowPackage.TASK__TRAVERSAL_CRITERION:
 				getTraversalCriterion().clear();
 				getTraversalCriterion().addAll((Collection<? extends TraversalCriterion>)newValue);
+				return;
+			case EasyflowPackage.TASK__COMMAND_LINE:
+				getCommandLine().clear();
+				getCommandLine().addAll((Collection<? extends CommandLine>)newValue);
 				return;
 			case EasyflowPackage.TASK__PARENT_TASKS:
 				getParentTasks().clear();
@@ -501,9 +562,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case EasyflowPackage.TASK__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case EasyflowPackage.TASK__DATA_CRITERION:
-				getDataCriterion().clear();
-				return;
 			case EasyflowPackage.TASK__DATA_FORMAT_IN:
 				getDataFormatIn().clear();
 				return;
@@ -516,6 +574,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case EasyflowPackage.TASK__CARDINALITY_OUT:
 				setCardinalityOut(CARDINALITY_OUT_EDEFAULT);
 				return;
+			case EasyflowPackage.TASK__DATA_CRITERION:
+				getDataCriterion().clear();
+				return;
 			case EasyflowPackage.TASK__IS_MULTIPLE_INSTANCE_OF_DATA_CRITERION:
 				setIsMultipleInstanceOfDataCriterion(IS_MULTIPLE_INSTANCE_OF_DATA_CRITERION_EDEFAULT);
 				return;
@@ -524,6 +585,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return;
 			case EasyflowPackage.TASK__TRAVERSAL_CRITERION:
 				getTraversalCriterion().clear();
+				return;
+			case EasyflowPackage.TASK__COMMAND_LINE:
+				getCommandLine().clear();
 				return;
 			case EasyflowPackage.TASK__PARENT_TASKS:
 				getParentTasks().clear();
@@ -542,8 +606,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		switch (featureID) {
 			case EasyflowPackage.TASK__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case EasyflowPackage.TASK__DATA_CRITERION:
-				return dataCriterion != null && !dataCriterion.isEmpty();
 			case EasyflowPackage.TASK__DATA_FORMAT_IN:
 				return dataFormatIn != null && !dataFormatIn.isEmpty();
 			case EasyflowPackage.TASK__DATA_FORMAT_OUT:
@@ -552,12 +614,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return cardinalityIn != CARDINALITY_IN_EDEFAULT;
 			case EasyflowPackage.TASK__CARDINALITY_OUT:
 				return cardinalityOut != CARDINALITY_OUT_EDEFAULT;
+			case EasyflowPackage.TASK__DATA_CRITERION:
+				return dataCriterion != null && !dataCriterion.isEmpty();
 			case EasyflowPackage.TASK__IS_MULTIPLE_INSTANCE_OF_DATA_CRITERION:
 				return IS_MULTIPLE_INSTANCE_OF_DATA_CRITERION_EDEFAULT == null ? isMultipleInstanceOfDataCriterion != null : !IS_MULTIPLE_INSTANCE_OF_DATA_CRITERION_EDEFAULT.equals(isMultipleInstanceOfDataCriterion);
 			case EasyflowPackage.TASK__SPLIT_CRITERION:
 				return splitCriterion != null && !splitCriterion.isEmpty();
 			case EasyflowPackage.TASK__TRAVERSAL_CRITERION:
 				return traversalCriterion != null && !traversalCriterion.isEmpty();
+			case EasyflowPackage.TASK__COMMAND_LINE:
+				return commandLine != null && !commandLine.isEmpty();
 			case EasyflowPackage.TASK__PARENT_TASKS:
 				return parentTasks != null && !parentTasks.isEmpty();
 		}
@@ -576,8 +642,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", dataCriterion: ");
-		result.append(dataCriterion);
 		result.append(", dataFormatIn: ");
 		result.append(dataFormatIn);
 		result.append(", dataFormatOut: ");
@@ -586,6 +650,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(cardinalityIn);
 		result.append(", cardinalityOut: ");
 		result.append(cardinalityOut);
+		result.append(", dataCriterion: ");
+		result.append(dataCriterion);
 		result.append(", isMultipleInstanceOfDataCriterion: ");
 		result.append(isMultipleInstanceOfDataCriterion);
 		result.append(", splitCriterion: ");

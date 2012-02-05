@@ -6,7 +6,11 @@
  */
 package easyflow;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
+import org.jgrapht.graph.ListenableDirectedGraph;
 
 /**
  * <!-- begin-user-doc -->
@@ -54,9 +58,9 @@ public interface EasyFlowTemplate extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model dataType="easyflow.Dag"
 	 * @generated
 	 */
-	void templateFileParser();
+	ListenableDirectedGraph generateDAGFromTemplateFile(Map<DataProcessingType, Task> lastTaskClassMap);
 
 } // EasyFlowTemplate

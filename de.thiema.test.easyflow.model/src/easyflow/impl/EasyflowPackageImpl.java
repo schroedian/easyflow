@@ -6,8 +6,14 @@
  */
 package easyflow.impl;
 
+import argo.jdom.JsonRootNode;
+import easyflow.Argument;
+import easyflow.CommandArgument;
+import easyflow.CommandLine;
 import java.util.Map;
 
+import java.util.Set;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -17,6 +23,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.ListenableDirectedGraph;
 
 import easyflow.DataCriterion;
@@ -28,11 +35,14 @@ import easyflow.EasyFlowMetadata;
 import easyflow.EasyFlowTemplate;
 import easyflow.EasyflowFactory;
 import easyflow.EasyflowPackage;
+import easyflow.IWorkflowUtil;
+import easyflow.Option;
 import easyflow.SplitCriterion;
 import easyflow.Task;
+import easyflow.Tool;
 import easyflow.TraversalCriterion;
+import easyflow.Util;
 import easyflow.Workflow;
-import easyflow.WorkflowUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -102,7 +112,42 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass workflowUtilEClass = null;
+	private EClass iWorkflowUtilEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass commandLineEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass commandArgumentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass toolEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass argumentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass csvEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -138,6 +183,27 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	private EDataType dagEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType eSetEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType edgeFactoryEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType jsonRootNodeEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -232,26 +298,8 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getWorkflow_WorkflowTemplateFileName() {
-		return (EAttribute)workflowEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getWorkflow_MetadataFileName() {
-		return (EAttribute)workflowEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getWorkflow_WorkflowTemplate() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(4);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -260,7 +308,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EReference getWorkflow_Configuration() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(5);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -269,7 +317,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EReference getWorkflow_Metadata() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(6);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -278,7 +326,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EReference getWorkflow_ImplementationTemplate() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(7);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -287,7 +335,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EReference getWorkflow_DataProcessingType() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(8);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -296,7 +344,16 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EReference getWorkflow_WorkflowUtil() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(9);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWorkflow_LastTaskClassMap() {
+		return (EReference)workflowEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -323,7 +380,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EAttribute getTask_DataCriterion() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -332,7 +389,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EAttribute getTask_DataFormatIn() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -341,7 +398,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EAttribute getTask_DataFormatOut() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -350,7 +407,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EAttribute getTask_CardinalityIn() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -359,7 +416,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EAttribute getTask_CardinalityOut() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -395,6 +452,15 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	public EReference getTask_ParentTasks() {
+		return (EReference)taskEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTask_CommandLine() {
 		return (EReference)taskEClass.getEStructuralFeatures().get(9);
 	}
 
@@ -432,6 +498,15 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 */
 	public EAttribute getEasyFlowConfiguration_FileName() {
 		return (EAttribute)easyFlowConfigurationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEasyFlowConfiguration_ConfigMap() {
+		return (EAttribute)easyFlowConfigurationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -502,6 +577,33 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getEasyFlowImplementationTemplate_ParameterFileName() {
+		return (EAttribute)easyFlowImplementationTemplateEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEasyFlowImplementationTemplate_ParameterConfigMap() {
+		return (EAttribute)easyFlowImplementationTemplateEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEasyFlowImplementationTemplate_JsonRootNode() {
+		return (EAttribute)easyFlowImplementationTemplateEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDataProcessingTypeToTask() {
 		return dataProcessingTypeToTaskEClass;
 	}
@@ -529,8 +631,8 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getWorkflowUtil() {
-		return workflowUtilEClass;
+	public EClass getIWorkflowUtil() {
+		return iWorkflowUtilEClass;
 	}
 
 	/**
@@ -538,8 +640,197 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflowUtil_LastTaskClassMap() {
-		return (EReference)workflowUtilEClass.getEStructuralFeatures().get(0);
+	public EClass getCommandLine() {
+		return commandLineEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCommandLine_SubCmd() {
+		return (EAttribute)commandLineEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCommandLine_ArgIn() {
+		return (EReference)commandLineEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCommandLine_ArgOut() {
+		return (EReference)commandLineEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCommandLine_Tool() {
+		return (EReference)commandLineEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCommandLine_OptionalArg() {
+		return (EReference)commandLineEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCommandLine_RequiredArg() {
+		return (EReference)commandLineEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCommandArgument() {
+		return commandArgumentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCommandArgument_Name() {
+		return (EAttribute)commandArgumentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCommandArgument_Arg() {
+		return (EAttribute)commandArgumentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCommandArgument_Sep() {
+		return (EAttribute)commandArgumentEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCommandArgument_Named() {
+		return (EAttribute)commandArgumentEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCommandArgument_Required() {
+		return (EAttribute)commandArgumentEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTool() {
+		return toolEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTool_Name() {
+		return (EAttribute)toolEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTool_Type() {
+		return (EAttribute)toolEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTool_Category() {
+		return (EAttribute)toolEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getArgument() {
+		return argumentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getArgument_Name() {
+		return (EAttribute)argumentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getArgument_Arg() {
+		return (EAttribute)argumentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getArgument_Sep() {
+		return (EAttribute)argumentEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCSV() {
+		return csvEClass;
 	}
 
 	/**
@@ -592,6 +883,33 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getESet() {
+		return eSetEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getEdgeFactory() {
+		return edgeFactoryEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getJsonRootNode() {
+		return jsonRootNodeEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EasyflowFactory getEasyflowFactory() {
 		return (EasyflowFactory)getEFactoryInstance();
 	}
@@ -618,25 +936,25 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		workflowEClass = createEClass(WORKFLOW);
 		createEAttribute(workflowEClass, WORKFLOW__NAME);
 		createEAttribute(workflowEClass, WORKFLOW__DAG);
-		createEAttribute(workflowEClass, WORKFLOW__WORKFLOW_TEMPLATE_FILE_NAME);
-		createEAttribute(workflowEClass, WORKFLOW__METADATA_FILE_NAME);
 		createEReference(workflowEClass, WORKFLOW__WORKFLOW_TEMPLATE);
 		createEReference(workflowEClass, WORKFLOW__CONFIGURATION);
 		createEReference(workflowEClass, WORKFLOW__METADATA);
 		createEReference(workflowEClass, WORKFLOW__IMPLEMENTATION_TEMPLATE);
 		createEReference(workflowEClass, WORKFLOW__DATA_PROCESSING_TYPE);
 		createEReference(workflowEClass, WORKFLOW__WORKFLOW_UTIL);
+		createEReference(workflowEClass, WORKFLOW__LAST_TASK_CLASS_MAP);
 
 		taskEClass = createEClass(TASK);
 		createEAttribute(taskEClass, TASK__NAME);
-		createEAttribute(taskEClass, TASK__DATA_CRITERION);
 		createEAttribute(taskEClass, TASK__DATA_FORMAT_IN);
 		createEAttribute(taskEClass, TASK__DATA_FORMAT_OUT);
 		createEAttribute(taskEClass, TASK__CARDINALITY_IN);
 		createEAttribute(taskEClass, TASK__CARDINALITY_OUT);
+		createEAttribute(taskEClass, TASK__DATA_CRITERION);
 		createEAttribute(taskEClass, TASK__IS_MULTIPLE_INSTANCE_OF_DATA_CRITERION);
 		createEAttribute(taskEClass, TASK__SPLIT_CRITERION);
 		createEAttribute(taskEClass, TASK__TRAVERSAL_CRITERION);
+		createEReference(taskEClass, TASK__COMMAND_LINE);
 		createEReference(taskEClass, TASK__PARENT_TASKS);
 
 		easyFlowTemplateEClass = createEClass(EASY_FLOW_TEMPLATE);
@@ -644,6 +962,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 
 		easyFlowConfigurationEClass = createEClass(EASY_FLOW_CONFIGURATION);
 		createEAttribute(easyFlowConfigurationEClass, EASY_FLOW_CONFIGURATION__FILE_NAME);
+		createEAttribute(easyFlowConfigurationEClass, EASY_FLOW_CONFIGURATION__CONFIG_MAP);
 
 		easyFlowMetadataEClass = createEClass(EASY_FLOW_METADATA);
 		createEAttribute(easyFlowMetadataEClass, EASY_FLOW_METADATA__FILE_NAME);
@@ -654,13 +973,42 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 
 		easyFlowImplementationTemplateEClass = createEClass(EASY_FLOW_IMPLEMENTATION_TEMPLATE);
 		createEAttribute(easyFlowImplementationTemplateEClass, EASY_FLOW_IMPLEMENTATION_TEMPLATE__FILE_NAME);
+		createEAttribute(easyFlowImplementationTemplateEClass, EASY_FLOW_IMPLEMENTATION_TEMPLATE__PARAMETER_FILE_NAME);
+		createEAttribute(easyFlowImplementationTemplateEClass, EASY_FLOW_IMPLEMENTATION_TEMPLATE__PARAMETER_CONFIG_MAP);
+		createEAttribute(easyFlowImplementationTemplateEClass, EASY_FLOW_IMPLEMENTATION_TEMPLATE__JSON_ROOT_NODE);
 
 		dataProcessingTypeToTaskEClass = createEClass(DATA_PROCESSING_TYPE_TO_TASK);
 		createEReference(dataProcessingTypeToTaskEClass, DATA_PROCESSING_TYPE_TO_TASK__KEY);
 		createEReference(dataProcessingTypeToTaskEClass, DATA_PROCESSING_TYPE_TO_TASK__VALUE);
 
-		workflowUtilEClass = createEClass(WORKFLOW_UTIL);
-		createEReference(workflowUtilEClass, WORKFLOW_UTIL__LAST_TASK_CLASS_MAP);
+		iWorkflowUtilEClass = createEClass(IWORKFLOW_UTIL);
+
+		commandLineEClass = createEClass(COMMAND_LINE);
+		createEAttribute(commandLineEClass, COMMAND_LINE__SUB_CMD);
+		createEReference(commandLineEClass, COMMAND_LINE__ARG_IN);
+		createEReference(commandLineEClass, COMMAND_LINE__ARG_OUT);
+		createEReference(commandLineEClass, COMMAND_LINE__TOOL);
+		createEReference(commandLineEClass, COMMAND_LINE__OPTIONAL_ARG);
+		createEReference(commandLineEClass, COMMAND_LINE__REQUIRED_ARG);
+
+		commandArgumentEClass = createEClass(COMMAND_ARGUMENT);
+		createEAttribute(commandArgumentEClass, COMMAND_ARGUMENT__NAME);
+		createEAttribute(commandArgumentEClass, COMMAND_ARGUMENT__ARG);
+		createEAttribute(commandArgumentEClass, COMMAND_ARGUMENT__SEP);
+		createEAttribute(commandArgumentEClass, COMMAND_ARGUMENT__NAMED);
+		createEAttribute(commandArgumentEClass, COMMAND_ARGUMENT__REQUIRED);
+
+		toolEClass = createEClass(TOOL);
+		createEAttribute(toolEClass, TOOL__NAME);
+		createEAttribute(toolEClass, TOOL__TYPE);
+		createEAttribute(toolEClass, TOOL__CATEGORY);
+
+		argumentEClass = createEClass(ARGUMENT);
+		createEAttribute(argumentEClass, ARGUMENT__NAME);
+		createEAttribute(argumentEClass, ARGUMENT__ARG);
+		createEAttribute(argumentEClass, ARGUMENT__SEP);
+
+		csvEClass = createEClass(CSV);
 
 		// Create enums
 		dataFormatEEnum = createEEnum(DATA_FORMAT);
@@ -670,6 +1018,9 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 
 		// Create data types
 		dagEDataType = createEDataType(DAG);
+		eSetEDataType = createEDataType(ESET);
+		edgeFactoryEDataType = createEDataType(EDGE_FACTORY);
+		jsonRootNodeEDataType = createEDataType(JSON_ROOT_NODE);
 	}
 
 	/**
@@ -705,14 +1056,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEClass(workflowEClass, Workflow.class, "Workflow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getWorkflow_Name(), ecorePackage.getEString(), "name", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkflow_Dag(), this.getDag(), "dag", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWorkflow_WorkflowTemplateFileName(), ecorePackage.getEString(), "workflowTemplateFileName", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWorkflow_MetadataFileName(), ecorePackage.getEString(), "metadataFileName", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_WorkflowTemplate(), this.getEasyFlowTemplate(), null, "WorkflowTemplate", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_Configuration(), this.getEasyFlowConfiguration(), null, "Configuration", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_Metadata(), this.getEasyFlowMetadata(), null, "Metadata", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_ImplementationTemplate(), this.getEasyFlowImplementationTemplate(), null, "ImplementationTemplate", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_DataProcessingType(), this.getDataProcessingType(), null, "DataProcessingType", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_WorkflowUtil(), this.getWorkflowUtil(), null, "WorkflowUtil", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_WorkflowTemplate(), this.getEasyFlowTemplate(), null, "WorkflowTemplate", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_Configuration(), this.getEasyFlowConfiguration(), null, "Configuration", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_Metadata(), this.getEasyFlowMetadata(), null, "Metadata", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_ImplementationTemplate(), this.getEasyFlowImplementationTemplate(), null, "ImplementationTemplate", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_DataProcessingType(), this.getDataProcessingType(), null, "DataProcessingType", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_WorkflowUtil(), this.getIWorkflowUtil(), null, "WorkflowUtil", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_LastTaskClassMap(), this.getDataProcessingTypeToTask(), null, "LastTaskClassMap", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(workflowEClass, null, "initDag", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -726,26 +1076,42 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTask_DataCriterion(), this.getDataCriterion(), "dataCriterion", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_DataFormatIn(), this.getDataFormat(), "dataFormatIn", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_DataFormatOut(), this.getDataFormat(), "dataFormatOut", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_CardinalityIn(), ecorePackage.getEShort(), "cardinalityIn", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_CardinalityOut(), ecorePackage.getEShort(), "cardinalityOut", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_DataCriterion(), this.getDataCriterion(), "dataCriterion", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_IsMultipleInstanceOfDataCriterion(), ecorePackage.getEBooleanObject(), "isMultipleInstanceOfDataCriterion", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_SplitCriterion(), this.getSplitCriterion(), "splitCriterion", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_TraversalCriterion(), this.getTraversalCriterion(), "TraversalCriterion", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTask_ParentTasks(), this.getTask(), null, "parentTasks", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_CommandLine(), this.getCommandLine(), null, "commandLine", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_ParentTasks(), this.getTask(), null, "parentTasks", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = addEOperation(taskEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "wtplLine", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(taskEClass, ecorePackage.getEString(), "getFilesIn", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDataFormat(), "dataFormatIn", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(easyFlowTemplateEClass, EasyFlowTemplate.class, "EasyFlowTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEasyFlowTemplate_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, EasyFlowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(easyFlowTemplateEClass, null, "templateFileParser", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(easyFlowTemplateEClass, this.getDag(), "generateDAGFromTemplateFile", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EGenericType g1 = createEGenericType(ecorePackage.getEMap());
+		EGenericType g2 = createEGenericType(this.getDataProcessingType());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(this.getTask());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "lastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(easyFlowConfigurationEClass, EasyFlowConfiguration.class, "EasyFlowConfiguration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEasyFlowConfiguration_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, EasyFlowConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEString());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEString());
+		g1.getETypeArguments().add(g2);
+		initEAttribute(getEasyFlowConfiguration_ConfigMap(), g1, "configMap", null, 0, 1, EasyFlowConfiguration.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(easyFlowConfigurationEClass, null, "configFileReader", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -763,28 +1129,57 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 
 		initEClass(easyFlowImplementationTemplateEClass, EasyFlowImplementationTemplate.class, "EasyFlowImplementationTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEasyFlowImplementationTemplate_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, EasyFlowImplementationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEasyFlowImplementationTemplate_ParameterFileName(), ecorePackage.getEString(), "parameterFileName", null, 0, 1, EasyFlowImplementationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEString());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEString());
+		g1.getETypeArguments().add(g2);
+		initEAttribute(getEasyFlowImplementationTemplate_ParameterConfigMap(), g1, "parameterConfigMap", null, 0, 1, EasyFlowImplementationTemplate.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEasyFlowImplementationTemplate_JsonRootNode(), this.getJsonRootNode(), "jsonRootNode", null, 0, 1, EasyFlowImplementationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(easyFlowImplementationTemplateEClass, null, "templateFileParser", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(easyFlowImplementationTemplateEClass, null, "templateFileParser", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDag(), "dag", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(easyFlowImplementationTemplateEClass, null, "readParameterConfig", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "toolName", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(easyFlowImplementationTemplateEClass, null, "initJsonRootNode", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(dataProcessingTypeToTaskEClass, Map.Entry.class, "DataProcessingTypeToTask", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataProcessingTypeToTask_Key(), this.getDataProcessingType(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataProcessingTypeToTask_Value(), this.getTask(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(workflowUtilEClass, WorkflowUtil.class, "WorkflowUtil", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getWorkflowUtil_LastTaskClassMap(), this.getDataProcessingTypeToTask(), null, "LastTaskClassMap", null, 0, -1, WorkflowUtil.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(iWorkflowUtilEClass, IWorkflowUtil.class, "IWorkflowUtil", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		addEOperation(workflowUtilEClass, this.getTask(), "getAllTasks", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(iWorkflowUtilEClass, this.getTask(), "getAllTasks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(workflowUtilEClass, this.getTask(), "getTasksFromLastTaskClass", 0, -1, IS_UNIQUE, IS_ORDERED);
-		EGenericType g1 = createEGenericType(ecorePackage.getEEList());
-		EGenericType g2 = createEGenericType(this.getDataFormat());
+		op = addEOperation(iWorkflowUtilEClass, this.getTask(), "getTasksFromLastTaskClass", 0, -1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEEList());
+		g2 = createEGenericType(this.getDataFormat());
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "dataFormatIn", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEEList());
+		g2 = createEGenericType(this.getDataFormat());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "dataFormatOut", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(this.getDataProcessingType());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(this.getTask());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "lastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(workflowUtilEClass, this.getTask(), "getTaskFromLastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iWorkflowUtilEClass, this.getTask(), "getTaskFromLastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataProcessingType(), "dataProcessingTypeIn", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(this.getDataProcessingType());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(this.getTask());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "lastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(workflowUtilEClass, null, "updateLastTaskClass", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iWorkflowUtilEClass, null, "updateLastTaskClass", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEEList());
 		g2 = createEGenericType(this.getDataFormat());
 		g1.getETypeArguments().add(g2);
@@ -794,10 +1189,83 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "dataFormatOut", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(this.getDataProcessingType());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(this.getTask());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "lastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(workflowUtilEClass, null, "updateLastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iWorkflowUtilEClass, null, "updateLastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataProcessingType(), "dataProcessingType", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(this.getDataProcessingType());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(this.getTask());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "lastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iWorkflowUtilEClass, null, "addTaskListToDAG", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDag(), "dag", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEEList());
+		g2 = createEGenericType(this.getTask());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "lastTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getTask(), "curTask", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iWorkflowUtilEClass, null, "getTaskByName", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getESet(), "taskSet", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "rawTaskNames", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEEList());
+		g2 = createEGenericType(this.getTask());
+		g1.getETypeArguments().add(g2);
+		initEOperation(op, g1);
+
+		op = addEOperation(iWorkflowUtilEClass, null, "printLastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(this.getDataProcessingType());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(this.getTask());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "lastTaskClassMap", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(commandLineEClass, CommandLine.class, "CommandLine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCommandLine_SubCmd(), ecorePackage.getEString(), "subCmd", null, 0, 1, CommandLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCommandLine_ArgIn(), this.getCommandArgument(), null, "argIn", null, 0, -1, CommandLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCommandLine_ArgOut(), this.getCommandArgument(), null, "argOut", null, 0, -1, CommandLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCommandLine_Tool(), this.getTool(), null, "tool", null, 0, 1, CommandLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCommandLine_OptionalArg(), this.getCommandArgument(), null, "optionalArg", null, 0, -1, CommandLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCommandLine_RequiredArg(), this.getCommandArgument(), null, "requiredArg", null, 0, -1, CommandLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(commandLineEClass, ecorePackage.getEString(), "printCommandLine", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(commandLineEClass, null, "setCmdProperties", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEString());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEString());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "parameterConfigMap", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(commandArgumentEClass, CommandArgument.class, "CommandArgument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCommandArgument_Name(), ecorePackage.getEString(), "name", null, 0, 1, CommandArgument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCommandArgument_Arg(), ecorePackage.getEString(), "arg", null, 0, 1, CommandArgument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCommandArgument_Sep(), ecorePackage.getEString(), "sep", null, 0, 1, CommandArgument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCommandArgument_Named(), ecorePackage.getEBoolean(), "named", null, 0, 1, CommandArgument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCommandArgument_Required(), ecorePackage.getEBoolean(), "required", null, 0, 1, CommandArgument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(toolEClass, Tool.class, "Tool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTool_Name(), ecorePackage.getEString(), "name", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTool_Type(), ecorePackage.getEString(), "type", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTool_Category(), ecorePackage.getEString(), "category", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(argumentEClass, Argument.class, "Argument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getArgument_Name(), ecorePackage.getEString(), "name", null, 0, 1, Argument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getArgument_Arg(), ecorePackage.getEString(), "arg", null, 0, 1, Argument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getArgument_Sep(), ecorePackage.getEString(), "sep", null, 0, 1, Argument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(csvEClass, easyflow.CSV.class, "CSV", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize enums and add enum literals
 		initEEnum(dataFormatEEnum, DataFormat.class, "DataFormat");
@@ -841,6 +1309,9 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 
 		// Initialize data types
 		initEDataType(dagEDataType, ListenableDirectedGraph.class, "Dag", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(eSetEDataType, Set.class, "ESet", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(edgeFactoryEDataType, EdgeFactory.class, "EdgeFactory", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(jsonRootNodeEDataType, JsonRootNode.class, "JsonRootNode", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

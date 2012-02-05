@@ -90,67 +90,49 @@ public interface EasyflowPackage extends EPackage {
 	int WORKFLOW__DAG = 1;
 
 	/**
-	 * The feature id for the '<em><b>Workflow Template File Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Workflow Template</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__WORKFLOW_TEMPLATE_FILE_NAME = 2;
+	int WORKFLOW__WORKFLOW_TEMPLATE = 2;
 
 	/**
-	 * The feature id for the '<em><b>Metadata File Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Configuration</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__METADATA_FILE_NAME = 3;
+	int WORKFLOW__CONFIGURATION = 3;
 
 	/**
-	 * The feature id for the '<em><b>Workflow Template</b></em>' reference.
+	 * The feature id for the '<em><b>Metadata</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__WORKFLOW_TEMPLATE = 4;
+	int WORKFLOW__METADATA = 4;
 
 	/**
-	 * The feature id for the '<em><b>Configuration</b></em>' reference.
+	 * The feature id for the '<em><b>Implementation Template</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__CONFIGURATION = 5;
+	int WORKFLOW__IMPLEMENTATION_TEMPLATE = 5;
 
 	/**
-	 * The feature id for the '<em><b>Metadata</b></em>' reference.
+	 * The feature id for the '<em><b>Data Processing Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__METADATA = 6;
-
-	/**
-	 * The feature id for the '<em><b>Implementation Template</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__IMPLEMENTATION_TEMPLATE = 7;
-
-	/**
-	 * The feature id for the '<em><b>Data Processing Type</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__DATA_PROCESSING_TYPE = 8;
+	int WORKFLOW__DATA_PROCESSING_TYPE = 6;
 
 	/**
 	 * The feature id for the '<em><b>Workflow Util</b></em>' reference.
@@ -159,7 +141,16 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__WORKFLOW_UTIL = 9;
+	int WORKFLOW__WORKFLOW_UTIL = 7;
+
+	/**
+	 * The feature id for the '<em><b>Last Task Class Map</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__LAST_TASK_CLASS_MAP = 8;
 
 	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
@@ -168,7 +159,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 10;
+	int WORKFLOW_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link easyflow.impl.TaskImpl <em>Task</em>}' class.
@@ -190,22 +181,13 @@ public interface EasyflowPackage extends EPackage {
 	int TASK__NAME = 0;
 
 	/**
-	 * The feature id for the '<em><b>Data Criterion</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK__DATA_CRITERION = 1;
-
-	/**
 	 * The feature id for the '<em><b>Data Format In</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__DATA_FORMAT_IN = 2;
+	int TASK__DATA_FORMAT_IN = 1;
 
 	/**
 	 * The feature id for the '<em><b>Data Format Out</b></em>' attribute list.
@@ -214,7 +196,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__DATA_FORMAT_OUT = 3;
+	int TASK__DATA_FORMAT_OUT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Cardinality In</b></em>' attribute.
@@ -223,7 +205,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__CARDINALITY_IN = 4;
+	int TASK__CARDINALITY_IN = 3;
 
 	/**
 	 * The feature id for the '<em><b>Cardinality Out</b></em>' attribute.
@@ -232,7 +214,16 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__CARDINALITY_OUT = 5;
+	int TASK__CARDINALITY_OUT = 4;
+
+	/**
+	 * The feature id for the '<em><b>Data Criterion</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__DATA_CRITERION = 5;
 
 	/**
 	 * The feature id for the '<em><b>Is Multiple Instance Of Data Criterion</b></em>' attribute.
@@ -262,13 +253,22 @@ public interface EasyflowPackage extends EPackage {
 	int TASK__TRAVERSAL_CRITERION = 8;
 
 	/**
-	 * The feature id for the '<em><b>Parent Tasks</b></em>' reference list.
+	 * The feature id for the '<em><b>Command Line</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__PARENT_TASKS = 9;
+	int TASK__COMMAND_LINE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Parent Tasks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__PARENT_TASKS = 10;
 
 	/**
 	 * The number of structural features of the '<em>Task</em>' class.
@@ -277,7 +277,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 10;
+	int TASK_FEATURE_COUNT = 11;
 
 	/**
 	 * The meta object id for the '{@link easyflow.impl.EasyFlowTemplateImpl <em>Easy Flow Template</em>}' class.
@@ -327,13 +327,22 @@ public interface EasyflowPackage extends EPackage {
 	int EASY_FLOW_CONFIGURATION__FILE_NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Config Map</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASY_FLOW_CONFIGURATION__CONFIG_MAP = 1;
+
+	/**
 	 * The number of structural features of the '<em>Easy Flow Configuration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EASY_FLOW_CONFIGURATION_FEATURE_COUNT = 1;
+	int EASY_FLOW_CONFIGURATION_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link easyflow.impl.EasyFlowMetadataImpl <em>Easy Flow Metadata</em>}' class.
@@ -420,13 +429,40 @@ public interface EasyflowPackage extends EPackage {
 	int EASY_FLOW_IMPLEMENTATION_TEMPLATE__FILE_NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Parameter File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASY_FLOW_IMPLEMENTATION_TEMPLATE__PARAMETER_FILE_NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Parameter Config Map</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASY_FLOW_IMPLEMENTATION_TEMPLATE__PARAMETER_CONFIG_MAP = 2;
+
+	/**
+	 * The feature id for the '<em><b>Json Root Node</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASY_FLOW_IMPLEMENTATION_TEMPLATE__JSON_ROOT_NODE = 3;
+
+	/**
 	 * The number of structural features of the '<em>Easy Flow Implementation Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EASY_FLOW_IMPLEMENTATION_TEMPLATE_FEATURE_COUNT = 1;
+	int EASY_FLOW_IMPLEMENTATION_TEMPLATE_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link easyflow.impl.DataProcessingTypeToTaskImpl <em>Data Processing Type To Task</em>}' class.
@@ -466,32 +502,271 @@ public interface EasyflowPackage extends EPackage {
 	int DATA_PROCESSING_TYPE_TO_TASK_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link easyflow.impl.WorkflowUtilImpl <em>Workflow Util</em>}' class.
+	 * The meta object id for the '{@link easyflow.IWorkflowUtil <em>IWorkflow Util</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see easyflow.impl.WorkflowUtilImpl
-	 * @see easyflow.impl.EasyflowPackageImpl#getWorkflowUtil()
+	 * @see easyflow.IWorkflowUtil
+	 * @see easyflow.impl.EasyflowPackageImpl#getIWorkflowUtil()
 	 * @generated
 	 */
-	int WORKFLOW_UTIL = 8;
+	int IWORKFLOW_UTIL = 8;
 
 	/**
-	 * The feature id for the '<em><b>Last Task Class Map</b></em>' map.
+	 * The number of structural features of the '<em>IWorkflow Util</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_UTIL__LAST_TASK_CLASS_MAP = 0;
+	int IWORKFLOW_UTIL_FEATURE_COUNT = 0;
 
 	/**
-	 * The number of structural features of the '<em>Workflow Util</em>' class.
+	 * The meta object id for the '{@link easyflow.impl.CommandLineImpl <em>Command Line</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.impl.CommandLineImpl
+	 * @see easyflow.impl.EasyflowPackageImpl#getCommandLine()
+	 * @generated
+	 */
+	int COMMAND_LINE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Sub Cmd</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_UTIL_FEATURE_COUNT = 1;
+	int COMMAND_LINE__SUB_CMD = 0;
+
+	/**
+	 * The feature id for the '<em><b>Arg In</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_LINE__ARG_IN = 1;
+
+	/**
+	 * The feature id for the '<em><b>Arg Out</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_LINE__ARG_OUT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Tool</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_LINE__TOOL = 3;
+
+	/**
+	 * The feature id for the '<em><b>Optional Arg</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_LINE__OPTIONAL_ARG = 4;
+
+	/**
+	 * The feature id for the '<em><b>Required Arg</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_LINE__REQUIRED_ARG = 5;
+
+	/**
+	 * The number of structural features of the '<em>Command Line</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_LINE_FEATURE_COUNT = 6;
+
+	/**
+	 * The meta object id for the '{@link easyflow.impl.CommandArgumentImpl <em>Command Argument</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.impl.CommandArgumentImpl
+	 * @see easyflow.impl.EasyflowPackageImpl#getCommandArgument()
+	 * @generated
+	 */
+	int COMMAND_ARGUMENT = 10;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_ARGUMENT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Arg</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_ARGUMENT__ARG = 1;
+
+	/**
+	 * The feature id for the '<em><b>Sep</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_ARGUMENT__SEP = 2;
+
+	/**
+	 * The feature id for the '<em><b>Named</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_ARGUMENT__NAMED = 3;
+
+	/**
+	 * The feature id for the '<em><b>Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_ARGUMENT__REQUIRED = 4;
+
+	/**
+	 * The number of structural features of the '<em>Command Argument</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_ARGUMENT_FEATURE_COUNT = 5;
+
+	/**
+	 * The meta object id for the '{@link easyflow.impl.ToolImpl <em>Tool</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.impl.ToolImpl
+	 * @see easyflow.impl.EasyflowPackageImpl#getTool()
+	 * @generated
+	 */
+	int TOOL = 11;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__TYPE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Category</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__CATEGORY = 2;
+
+	/**
+	 * The number of structural features of the '<em>Tool</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link easyflow.impl.ArgumentImpl <em>Argument</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.impl.ArgumentImpl
+	 * @see easyflow.impl.EasyflowPackageImpl#getArgument()
+	 * @generated
+	 */
+	int ARGUMENT = 12;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARGUMENT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Arg</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARGUMENT__ARG = 1;
+
+	/**
+	 * The feature id for the '<em><b>Sep</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARGUMENT__SEP = 2;
+
+	/**
+	 * The number of structural features of the '<em>Argument</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARGUMENT_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link easyflow.impl.CSVImpl <em>CSV</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.impl.CSVImpl
+	 * @see easyflow.impl.EasyflowPackageImpl#getCSV()
+	 * @generated
+	 */
+	int CSV = 13;
+
+	/**
+	 * The number of structural features of the '<em>CSV</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CSV_FEATURE_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.DataFormat <em>Data Format</em>}' enum.
@@ -501,7 +776,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDataFormat()
 	 * @generated
 	 */
-	int DATA_FORMAT = 9;
+	int DATA_FORMAT = 14;
 
 	/**
 	 * The meta object id for the '{@link easyflow.DataCriterion <em>Data Criterion</em>}' enum.
@@ -511,7 +786,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDataCriterion()
 	 * @generated
 	 */
-	int DATA_CRITERION = 10;
+	int DATA_CRITERION = 15;
 
 	/**
 	 * The meta object id for the '{@link easyflow.TraversalCriterion <em>Traversal Criterion</em>}' enum.
@@ -521,7 +796,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getTraversalCriterion()
 	 * @generated
 	 */
-	int TRAVERSAL_CRITERION = 11;
+	int TRAVERSAL_CRITERION = 16;
 
 	/**
 	 * The meta object id for the '{@link easyflow.SplitCriterion <em>Split Criterion</em>}' enum.
@@ -531,7 +806,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getSplitCriterion()
 	 * @generated
 	 */
-	int SPLIT_CRITERION = 12;
+	int SPLIT_CRITERION = 17;
 
 	/**
 	 * The meta object id for the '<em>Dag</em>' data type.
@@ -541,7 +816,40 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDag()
 	 * @generated
 	 */
-	int DAG = 13;
+	int DAG = 18;
+
+
+	/**
+	 * The meta object id for the '<em>ESet</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.util.Set
+	 * @see easyflow.impl.EasyflowPackageImpl#getESet()
+	 * @generated
+	 */
+	int ESET = 19;
+
+
+	/**
+	 * The meta object id for the '<em>Edge Factory</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.jgrapht.EdgeFactory
+	 * @see easyflow.impl.EasyflowPackageImpl#getEdgeFactory()
+	 * @generated
+	 */
+	int EDGE_FACTORY = 20;
+
+
+	/**
+	 * The meta object id for the '<em>Json Root Node</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see argo.jdom.JsonRootNode
+	 * @see easyflow.impl.EasyflowPackageImpl#getJsonRootNode()
+	 * @generated
+	 */
+	int JSON_ROOT_NODE = 21;
 
 
 	/**
@@ -577,32 +885,10 @@ public interface EasyflowPackage extends EPackage {
 	EAttribute getWorkflow_Dag();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.Workflow#getWorkflowTemplateFileName <em>Workflow Template File Name</em>}'.
+	 * Returns the meta object for the containment reference '{@link easyflow.Workflow#getWorkflowTemplate <em>Workflow Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Workflow Template File Name</em>'.
-	 * @see easyflow.Workflow#getWorkflowTemplateFileName()
-	 * @see #getWorkflow()
-	 * @generated
-	 */
-	EAttribute getWorkflow_WorkflowTemplateFileName();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.Workflow#getMetadataFileName <em>Metadata File Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Metadata File Name</em>'.
-	 * @see easyflow.Workflow#getMetadataFileName()
-	 * @see #getWorkflow()
-	 * @generated
-	 */
-	EAttribute getWorkflow_MetadataFileName();
-
-	/**
-	 * Returns the meta object for the reference '{@link easyflow.Workflow#getWorkflowTemplate <em>Workflow Template</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Workflow Template</em>'.
+	 * @return the meta object for the containment reference '<em>Workflow Template</em>'.
 	 * @see easyflow.Workflow#getWorkflowTemplate()
 	 * @see #getWorkflow()
 	 * @generated
@@ -610,10 +896,10 @@ public interface EasyflowPackage extends EPackage {
 	EReference getWorkflow_WorkflowTemplate();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.Workflow#getConfiguration <em>Configuration</em>}'.
+	 * Returns the meta object for the containment reference '{@link easyflow.Workflow#getConfiguration <em>Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Configuration</em>'.
+	 * @return the meta object for the containment reference '<em>Configuration</em>'.
 	 * @see easyflow.Workflow#getConfiguration()
 	 * @see #getWorkflow()
 	 * @generated
@@ -621,10 +907,10 @@ public interface EasyflowPackage extends EPackage {
 	EReference getWorkflow_Configuration();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.Workflow#getMetadata <em>Metadata</em>}'.
+	 * Returns the meta object for the containment reference '{@link easyflow.Workflow#getMetadata <em>Metadata</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Metadata</em>'.
+	 * @return the meta object for the containment reference '<em>Metadata</em>'.
 	 * @see easyflow.Workflow#getMetadata()
 	 * @see #getWorkflow()
 	 * @generated
@@ -632,10 +918,10 @@ public interface EasyflowPackage extends EPackage {
 	EReference getWorkflow_Metadata();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.Workflow#getImplementationTemplate <em>Implementation Template</em>}'.
+	 * Returns the meta object for the containment reference '{@link easyflow.Workflow#getImplementationTemplate <em>Implementation Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Implementation Template</em>'.
+	 * @return the meta object for the containment reference '<em>Implementation Template</em>'.
 	 * @see easyflow.Workflow#getImplementationTemplate()
 	 * @see #getWorkflow()
 	 * @generated
@@ -643,10 +929,10 @@ public interface EasyflowPackage extends EPackage {
 	EReference getWorkflow_ImplementationTemplate();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.Workflow#getDataProcessingType <em>Data Processing Type</em>}'.
+	 * Returns the meta object for the containment reference '{@link easyflow.Workflow#getDataProcessingType <em>Data Processing Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Data Processing Type</em>'.
+	 * @return the meta object for the containment reference '<em>Data Processing Type</em>'.
 	 * @see easyflow.Workflow#getDataProcessingType()
 	 * @see #getWorkflow()
 	 * @generated
@@ -663,6 +949,17 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_WorkflowUtil();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.Workflow#getLastTaskClassMap <em>Last Task Class Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Last Task Class Map</em>'.
+	 * @see easyflow.Workflow#getLastTaskClassMap()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_LastTaskClassMap();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.Task <em>Task</em>}'.
@@ -774,15 +1071,26 @@ public interface EasyflowPackage extends EPackage {
 	EAttribute getTask_TraversalCriterion();
 
 	/**
-	 * Returns the meta object for the reference list '{@link easyflow.Task#getParentTasks <em>Parent Tasks</em>}'.
+	 * Returns the meta object for the containment reference list '{@link easyflow.Task#getParentTasks <em>Parent Tasks</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Parent Tasks</em>'.
+	 * @return the meta object for the containment reference list '<em>Parent Tasks</em>'.
 	 * @see easyflow.Task#getParentTasks()
 	 * @see #getTask()
 	 * @generated
 	 */
 	EReference getTask_ParentTasks();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link easyflow.Task#getCommandLine <em>Command Line</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Command Line</em>'.
+	 * @see easyflow.Task#getCommandLine()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_CommandLine();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.EasyFlowTemplate <em>Easy Flow Template</em>}'.
@@ -825,6 +1133,17 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEasyFlowConfiguration_FileName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.EasyFlowConfiguration#getConfigMap <em>Config Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Config Map</em>'.
+	 * @see easyflow.EasyFlowConfiguration#getConfigMap()
+	 * @see #getEasyFlowConfiguration()
+	 * @generated
+	 */
+	EAttribute getEasyFlowConfiguration_ConfigMap();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.EasyFlowMetadata <em>Easy Flow Metadata</em>}'.
@@ -901,6 +1220,39 @@ public interface EasyflowPackage extends EPackage {
 	EAttribute getEasyFlowImplementationTemplate_FileName();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.EasyFlowImplementationTemplate#getParameterFileName <em>Parameter File Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Parameter File Name</em>'.
+	 * @see easyflow.EasyFlowImplementationTemplate#getParameterFileName()
+	 * @see #getEasyFlowImplementationTemplate()
+	 * @generated
+	 */
+	EAttribute getEasyFlowImplementationTemplate_ParameterFileName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.EasyFlowImplementationTemplate#getParameterConfigMap <em>Parameter Config Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Parameter Config Map</em>'.
+	 * @see easyflow.EasyFlowImplementationTemplate#getParameterConfigMap()
+	 * @see #getEasyFlowImplementationTemplate()
+	 * @generated
+	 */
+	EAttribute getEasyFlowImplementationTemplate_ParameterConfigMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.EasyFlowImplementationTemplate#getJsonRootNode <em>Json Root Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Json Root Node</em>'.
+	 * @see easyflow.EasyFlowImplementationTemplate#getJsonRootNode()
+	 * @see #getEasyFlowImplementationTemplate()
+	 * @generated
+	 */
+	EAttribute getEasyFlowImplementationTemplate_JsonRootNode();
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Data Processing Type To Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -935,25 +1287,251 @@ public interface EasyflowPackage extends EPackage {
 	EReference getDataProcessingTypeToTask_Value();
 
 	/**
-	 * Returns the meta object for class '{@link easyflow.WorkflowUtil <em>Workflow Util</em>}'.
+	 * Returns the meta object for class '{@link easyflow.IWorkflowUtil <em>IWorkflow Util</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Workflow Util</em>'.
-	 * @see easyflow.WorkflowUtil
+	 * @return the meta object for class '<em>IWorkflow Util</em>'.
+	 * @see easyflow.IWorkflowUtil
 	 * @generated
 	 */
-	EClass getWorkflowUtil();
+	EClass getIWorkflowUtil();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.WorkflowUtil#getLastTaskClassMap <em>Last Task Class Map</em>}'.
+	 * Returns the meta object for class '{@link easyflow.CommandLine <em>Command Line</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Last Task Class Map</em>'.
-	 * @see easyflow.WorkflowUtil#getLastTaskClassMap()
-	 * @see #getWorkflowUtil()
+	 * @return the meta object for class '<em>Command Line</em>'.
+	 * @see easyflow.CommandLine
 	 * @generated
 	 */
-	EReference getWorkflowUtil_LastTaskClassMap();
+	EClass getCommandLine();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.CommandLine#getSubCmd <em>Sub Cmd</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Sub Cmd</em>'.
+	 * @see easyflow.CommandLine#getSubCmd()
+	 * @see #getCommandLine()
+	 * @generated
+	 */
+	EAttribute getCommandLine_SubCmd();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link easyflow.CommandLine#getArgIn <em>Arg In</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Arg In</em>'.
+	 * @see easyflow.CommandLine#getArgIn()
+	 * @see #getCommandLine()
+	 * @generated
+	 */
+	EReference getCommandLine_ArgIn();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link easyflow.CommandLine#getArgOut <em>Arg Out</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Arg Out</em>'.
+	 * @see easyflow.CommandLine#getArgOut()
+	 * @see #getCommandLine()
+	 * @generated
+	 */
+	EReference getCommandLine_ArgOut();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link easyflow.CommandLine#getTool <em>Tool</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Tool</em>'.
+	 * @see easyflow.CommandLine#getTool()
+	 * @see #getCommandLine()
+	 * @generated
+	 */
+	EReference getCommandLine_Tool();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link easyflow.CommandLine#getOptionalArg <em>Optional Arg</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Optional Arg</em>'.
+	 * @see easyflow.CommandLine#getOptionalArg()
+	 * @see #getCommandLine()
+	 * @generated
+	 */
+	EReference getCommandLine_OptionalArg();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.CommandLine#getRequiredArg <em>Required Arg</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Required Arg</em>'.
+	 * @see easyflow.CommandLine#getRequiredArg()
+	 * @see #getCommandLine()
+	 * @generated
+	 */
+	EReference getCommandLine_RequiredArg();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.CommandArgument <em>Command Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Command Argument</em>'.
+	 * @see easyflow.CommandArgument
+	 * @generated
+	 */
+	EClass getCommandArgument();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.CommandArgument#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see easyflow.CommandArgument#getName()
+	 * @see #getCommandArgument()
+	 * @generated
+	 */
+	EAttribute getCommandArgument_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.CommandArgument#getArg <em>Arg</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Arg</em>'.
+	 * @see easyflow.CommandArgument#getArg()
+	 * @see #getCommandArgument()
+	 * @generated
+	 */
+	EAttribute getCommandArgument_Arg();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.CommandArgument#getSep <em>Sep</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Sep</em>'.
+	 * @see easyflow.CommandArgument#getSep()
+	 * @see #getCommandArgument()
+	 * @generated
+	 */
+	EAttribute getCommandArgument_Sep();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.CommandArgument#isNamed <em>Named</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Named</em>'.
+	 * @see easyflow.CommandArgument#isNamed()
+	 * @see #getCommandArgument()
+	 * @generated
+	 */
+	EAttribute getCommandArgument_Named();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.CommandArgument#isRequired <em>Required</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Required</em>'.
+	 * @see easyflow.CommandArgument#isRequired()
+	 * @see #getCommandArgument()
+	 * @generated
+	 */
+	EAttribute getCommandArgument_Required();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.Tool <em>Tool</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Tool</em>'.
+	 * @see easyflow.Tool
+	 * @generated
+	 */
+	EClass getTool();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.Tool#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see easyflow.Tool#getName()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EAttribute getTool_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.Tool#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see easyflow.Tool#getType()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EAttribute getTool_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.Tool#getCategory <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Category</em>'.
+	 * @see easyflow.Tool#getCategory()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EAttribute getTool_Category();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.Argument <em>Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Argument</em>'.
+	 * @see easyflow.Argument
+	 * @generated
+	 */
+	EClass getArgument();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.Argument#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see easyflow.Argument#getName()
+	 * @see #getArgument()
+	 * @generated
+	 */
+	EAttribute getArgument_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.Argument#getArg <em>Arg</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Arg</em>'.
+	 * @see easyflow.Argument#getArg()
+	 * @see #getArgument()
+	 * @generated
+	 */
+	EAttribute getArgument_Arg();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.Argument#getSep <em>Sep</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Sep</em>'.
+	 * @see easyflow.Argument#getSep()
+	 * @see #getArgument()
+	 * @generated
+	 */
+	EAttribute getArgument_Sep();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.CSV <em>CSV</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CSV</em>'.
+	 * @see easyflow.CSV
+	 * @generated
+	 */
+	EClass getCSV();
 
 	/**
 	 * Returns the meta object for enum '{@link easyflow.DataFormat <em>Data Format</em>}'.
@@ -1007,6 +1585,39 @@ public interface EasyflowPackage extends EPackage {
 	EDataType getDag();
 
 	/**
+	 * Returns the meta object for data type '{@link java.util.Set <em>ESet</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>ESet</em>'.
+	 * @see java.util.Set
+	 * @model instanceClass="java.util.Set"
+	 * @generated
+	 */
+	EDataType getESet();
+
+	/**
+	 * Returns the meta object for data type '{@link org.jgrapht.EdgeFactory <em>Edge Factory</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Edge Factory</em>'.
+	 * @see org.jgrapht.EdgeFactory
+	 * @model instanceClass="org.jgrapht.EdgeFactory"
+	 * @generated
+	 */
+	EDataType getEdgeFactory();
+
+	/**
+	 * Returns the meta object for data type '{@link argo.jdom.JsonRootNode <em>Json Root Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Json Root Node</em>'.
+	 * @see argo.jdom.JsonRootNode
+	 * @model instanceClass="argo.jdom.JsonRootNode"
+	 * @generated
+	 */
+	EDataType getJsonRootNode();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1055,23 +1666,7 @@ public interface EasyflowPackage extends EPackage {
 		EAttribute WORKFLOW__DAG = eINSTANCE.getWorkflow_Dag();
 
 		/**
-		 * The meta object literal for the '<em><b>Workflow Template File Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute WORKFLOW__WORKFLOW_TEMPLATE_FILE_NAME = eINSTANCE.getWorkflow_WorkflowTemplateFileName();
-
-		/**
-		 * The meta object literal for the '<em><b>Metadata File Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute WORKFLOW__METADATA_FILE_NAME = eINSTANCE.getWorkflow_MetadataFileName();
-
-		/**
-		 * The meta object literal for the '<em><b>Workflow Template</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Workflow Template</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1079,7 +1674,7 @@ public interface EasyflowPackage extends EPackage {
 		EReference WORKFLOW__WORKFLOW_TEMPLATE = eINSTANCE.getWorkflow_WorkflowTemplate();
 
 		/**
-		 * The meta object literal for the '<em><b>Configuration</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Configuration</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1087,7 +1682,7 @@ public interface EasyflowPackage extends EPackage {
 		EReference WORKFLOW__CONFIGURATION = eINSTANCE.getWorkflow_Configuration();
 
 		/**
-		 * The meta object literal for the '<em><b>Metadata</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Metadata</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1095,7 +1690,7 @@ public interface EasyflowPackage extends EPackage {
 		EReference WORKFLOW__METADATA = eINSTANCE.getWorkflow_Metadata();
 
 		/**
-		 * The meta object literal for the '<em><b>Implementation Template</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Implementation Template</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1103,7 +1698,7 @@ public interface EasyflowPackage extends EPackage {
 		EReference WORKFLOW__IMPLEMENTATION_TEMPLATE = eINSTANCE.getWorkflow_ImplementationTemplate();
 
 		/**
-		 * The meta object literal for the '<em><b>Data Processing Type</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Data Processing Type</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1117,6 +1712,14 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__WORKFLOW_UTIL = eINSTANCE.getWorkflow_WorkflowUtil();
+
+		/**
+		 * The meta object literal for the '<em><b>Last Task Class Map</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__LAST_TASK_CLASS_MAP = eINSTANCE.getWorkflow_LastTaskClassMap();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.impl.TaskImpl <em>Task</em>}' class.
@@ -1201,12 +1804,20 @@ public interface EasyflowPackage extends EPackage {
 		EAttribute TASK__TRAVERSAL_CRITERION = eINSTANCE.getTask_TraversalCriterion();
 
 		/**
-		 * The meta object literal for the '<em><b>Parent Tasks</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Parent Tasks</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference TASK__PARENT_TASKS = eINSTANCE.getTask_ParentTasks();
+
+		/**
+		 * The meta object literal for the '<em><b>Command Line</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__COMMAND_LINE = eINSTANCE.getTask_CommandLine();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.impl.EasyFlowTemplateImpl <em>Easy Flow Template</em>}' class.
@@ -1243,6 +1854,14 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EASY_FLOW_CONFIGURATION__FILE_NAME = eINSTANCE.getEasyFlowConfiguration_FileName();
+
+		/**
+		 * The meta object literal for the '<em><b>Config Map</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EASY_FLOW_CONFIGURATION__CONFIG_MAP = eINSTANCE.getEasyFlowConfiguration_ConfigMap();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.impl.EasyFlowMetadataImpl <em>Easy Flow Metadata</em>}' class.
@@ -1307,6 +1926,30 @@ public interface EasyflowPackage extends EPackage {
 		EAttribute EASY_FLOW_IMPLEMENTATION_TEMPLATE__FILE_NAME = eINSTANCE.getEasyFlowImplementationTemplate_FileName();
 
 		/**
+		 * The meta object literal for the '<em><b>Parameter File Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EASY_FLOW_IMPLEMENTATION_TEMPLATE__PARAMETER_FILE_NAME = eINSTANCE.getEasyFlowImplementationTemplate_ParameterFileName();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameter Config Map</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EASY_FLOW_IMPLEMENTATION_TEMPLATE__PARAMETER_CONFIG_MAP = eINSTANCE.getEasyFlowImplementationTemplate_ParameterConfigMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Json Root Node</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EASY_FLOW_IMPLEMENTATION_TEMPLATE__JSON_ROOT_NODE = eINSTANCE.getEasyFlowImplementationTemplate_JsonRootNode();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.impl.DataProcessingTypeToTaskImpl <em>Data Processing Type To Task</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1333,22 +1976,200 @@ public interface EasyflowPackage extends EPackage {
 		EReference DATA_PROCESSING_TYPE_TO_TASK__VALUE = eINSTANCE.getDataProcessingTypeToTask_Value();
 
 		/**
-		 * The meta object literal for the '{@link easyflow.impl.WorkflowUtilImpl <em>Workflow Util</em>}' class.
+		 * The meta object literal for the '{@link easyflow.IWorkflowUtil <em>IWorkflow Util</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see easyflow.impl.WorkflowUtilImpl
-		 * @see easyflow.impl.EasyflowPackageImpl#getWorkflowUtil()
+		 * @see easyflow.IWorkflowUtil
+		 * @see easyflow.impl.EasyflowPackageImpl#getIWorkflowUtil()
 		 * @generated
 		 */
-		EClass WORKFLOW_UTIL = eINSTANCE.getWorkflowUtil();
+		EClass IWORKFLOW_UTIL = eINSTANCE.getIWorkflowUtil();
 
 		/**
-		 * The meta object literal for the '<em><b>Last Task Class Map</b></em>' map feature.
+		 * The meta object literal for the '{@link easyflow.impl.CommandLineImpl <em>Command Line</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.impl.CommandLineImpl
+		 * @see easyflow.impl.EasyflowPackageImpl#getCommandLine()
+		 * @generated
+		 */
+		EClass COMMAND_LINE = eINSTANCE.getCommandLine();
+
+		/**
+		 * The meta object literal for the '<em><b>Sub Cmd</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference WORKFLOW_UTIL__LAST_TASK_CLASS_MAP = eINSTANCE.getWorkflowUtil_LastTaskClassMap();
+		EAttribute COMMAND_LINE__SUB_CMD = eINSTANCE.getCommandLine_SubCmd();
+
+		/**
+		 * The meta object literal for the '<em><b>Arg In</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMMAND_LINE__ARG_IN = eINSTANCE.getCommandLine_ArgIn();
+
+		/**
+		 * The meta object literal for the '<em><b>Arg Out</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMMAND_LINE__ARG_OUT = eINSTANCE.getCommandLine_ArgOut();
+
+		/**
+		 * The meta object literal for the '<em><b>Tool</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMMAND_LINE__TOOL = eINSTANCE.getCommandLine_Tool();
+
+		/**
+		 * The meta object literal for the '<em><b>Optional Arg</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMMAND_LINE__OPTIONAL_ARG = eINSTANCE.getCommandLine_OptionalArg();
+
+		/**
+		 * The meta object literal for the '<em><b>Required Arg</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMMAND_LINE__REQUIRED_ARG = eINSTANCE.getCommandLine_RequiredArg();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.impl.CommandArgumentImpl <em>Command Argument</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.impl.CommandArgumentImpl
+		 * @see easyflow.impl.EasyflowPackageImpl#getCommandArgument()
+		 * @generated
+		 */
+		EClass COMMAND_ARGUMENT = eINSTANCE.getCommandArgument();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMMAND_ARGUMENT__NAME = eINSTANCE.getCommandArgument_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Arg</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMMAND_ARGUMENT__ARG = eINSTANCE.getCommandArgument_Arg();
+
+		/**
+		 * The meta object literal for the '<em><b>Sep</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMMAND_ARGUMENT__SEP = eINSTANCE.getCommandArgument_Sep();
+
+		/**
+		 * The meta object literal for the '<em><b>Named</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMMAND_ARGUMENT__NAMED = eINSTANCE.getCommandArgument_Named();
+
+		/**
+		 * The meta object literal for the '<em><b>Required</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMMAND_ARGUMENT__REQUIRED = eINSTANCE.getCommandArgument_Required();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.impl.ToolImpl <em>Tool</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.impl.ToolImpl
+		 * @see easyflow.impl.EasyflowPackageImpl#getTool()
+		 * @generated
+		 */
+		EClass TOOL = eINSTANCE.getTool();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL__NAME = eINSTANCE.getTool_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL__TYPE = eINSTANCE.getTool_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Category</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL__CATEGORY = eINSTANCE.getTool_Category();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.impl.ArgumentImpl <em>Argument</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.impl.ArgumentImpl
+		 * @see easyflow.impl.EasyflowPackageImpl#getArgument()
+		 * @generated
+		 */
+		EClass ARGUMENT = eINSTANCE.getArgument();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ARGUMENT__NAME = eINSTANCE.getArgument_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Arg</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ARGUMENT__ARG = eINSTANCE.getArgument_Arg();
+
+		/**
+		 * The meta object literal for the '<em><b>Sep</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ARGUMENT__SEP = eINSTANCE.getArgument_Sep();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.impl.CSVImpl <em>CSV</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.impl.CSVImpl
+		 * @see easyflow.impl.EasyflowPackageImpl#getCSV()
+		 * @generated
+		 */
+		EClass CSV = eINSTANCE.getCSV();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.DataFormat <em>Data Format</em>}' enum.
@@ -1399,6 +2220,36 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType DAG = eINSTANCE.getDag();
+
+		/**
+		 * The meta object literal for the '<em>ESet</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Set
+		 * @see easyflow.impl.EasyflowPackageImpl#getESet()
+		 * @generated
+		 */
+		EDataType ESET = eINSTANCE.getESet();
+
+		/**
+		 * The meta object literal for the '<em>Edge Factory</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.jgrapht.EdgeFactory
+		 * @see easyflow.impl.EasyflowPackageImpl#getEdgeFactory()
+		 * @generated
+		 */
+		EDataType EDGE_FACTORY = eINSTANCE.getEdgeFactory();
+
+		/**
+		 * The meta object literal for the '<em>Json Root Node</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see argo.jdom.JsonRootNode
+		 * @see easyflow.impl.EasyflowPackageImpl#getJsonRootNode()
+		 * @generated
+		 */
+		EDataType JSON_ROOT_NODE = eINSTANCE.getJsonRootNode();
 
 	}
 

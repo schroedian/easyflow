@@ -11,39 +11,27 @@ import easyflow.EasyFlowConfiguration;
 import easyflow.EasyFlowImplementationTemplate;
 import easyflow.EasyFlowMetadata;
 import easyflow.EasyFlowTemplate;
-import easyflow.Task;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Logger;
-
 import easyflow.EasyflowPackage;
+import easyflow.IWorkflowUtil;
+import easyflow.Task;
 import easyflow.Workflow;
 
-import easyflow.WorkflowUtil;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EMap;
 
 import org.eclipse.emf.ecore.EClass;
-
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.jgrapht.EdgeFactory;
-import org.jgrapht.alg.KruskalMinimumSpanningTree;
+
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.jgrapht.graph.ListenableDirectedGraph;
-import org.jgraph.graph.DefaultEdge;
-import org.jgraph.graph.Edge;
-import org.jgrapht.graph.DefaultListenableGraph;
-import org.jgrapht.traverse.BreadthFirstIterator;
 
 /**
  * <!-- begin-user-doc -->
@@ -54,14 +42,13 @@ import org.jgrapht.traverse.BreadthFirstIterator;
  * <ul>
  *   <li>{@link easyflow.impl.WorkflowImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.impl.WorkflowImpl#getDag <em>Dag</em>}</li>
- *   <li>{@link easyflow.impl.WorkflowImpl#getWorkflowTemplateFileName <em>Workflow Template File Name</em>}</li>
- *   <li>{@link easyflow.impl.WorkflowImpl#getMetadataFileName <em>Metadata File Name</em>}</li>
  *   <li>{@link easyflow.impl.WorkflowImpl#getWorkflowTemplate <em>Workflow Template</em>}</li>
  *   <li>{@link easyflow.impl.WorkflowImpl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link easyflow.impl.WorkflowImpl#getMetadata <em>Metadata</em>}</li>
  *   <li>{@link easyflow.impl.WorkflowImpl#getImplementationTemplate <em>Implementation Template</em>}</li>
  *   <li>{@link easyflow.impl.WorkflowImpl#getDataProcessingType <em>Data Processing Type</em>}</li>
  *   <li>{@link easyflow.impl.WorkflowImpl#getWorkflowUtil <em>Workflow Util</em>}</li>
+ *   <li>{@link easyflow.impl.WorkflowImpl#getLastTaskClassMap <em>Last Task Class Map</em>}</li>
  * </ul>
  * </p>
  *
@@ -109,47 +96,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected ListenableDirectedGraph dag = DAG_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getWorkflowTemplateFileName() <em>Workflow Template File Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getWorkflowTemplateFileName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String WORKFLOW_TEMPLATE_FILE_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getWorkflowTemplateFileName() <em>Workflow Template File Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getWorkflowTemplateFileName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String workflowTemplateFileName = WORKFLOW_TEMPLATE_FILE_NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getMetadataFileName() <em>Metadata File Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMetadataFileName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String METADATA_FILE_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getMetadataFileName() <em>Metadata File Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMetadataFileName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String metadataFileName = METADATA_FILE_NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getWorkflowTemplate() <em>Workflow Template</em>}' reference.
+	 * The cached value of the '{@link #getWorkflowTemplate() <em>Workflow Template</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getWorkflowTemplate()
@@ -159,7 +106,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EasyFlowTemplate workflowTemplate;
 
 	/**
-	 * The cached value of the '{@link #getConfiguration() <em>Configuration</em>}' reference.
+	 * The cached value of the '{@link #getConfiguration() <em>Configuration</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getConfiguration()
@@ -169,7 +116,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EasyFlowConfiguration configuration;
 
 	/**
-	 * The cached value of the '{@link #getMetadata() <em>Metadata</em>}' reference.
+	 * The cached value of the '{@link #getMetadata() <em>Metadata</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getMetadata()
@@ -179,7 +126,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EasyFlowMetadata metadata;
 
 	/**
-	 * The cached value of the '{@link #getImplementationTemplate() <em>Implementation Template</em>}' reference.
+	 * The cached value of the '{@link #getImplementationTemplate() <em>Implementation Template</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getImplementationTemplate()
@@ -189,7 +136,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EasyFlowImplementationTemplate implementationTemplate;
 
 	/**
-	 * The cached value of the '{@link #getDataProcessingType() <em>Data Processing Type</em>}' reference.
+	 * The cached value of the '{@link #getDataProcessingType() <em>Data Processing Type</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getDataProcessingType()
@@ -206,17 +153,25 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 * @ordered
 	 */
-	protected WorkflowUtil workflowUtil;
+	protected IWorkflowUtil workflowUtil;
+
+	/**
+	 * The cached value of the '{@link #getLastTaskClassMap() <em>Last Task Class Map</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLastTaskClassMap()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<DataProcessingType, Task> lastTaskClassMap;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
 	 */
-	public WorkflowImpl() {
+	protected WorkflowImpl() {
 		super();
-		//ListenableDirectedGraph<easyflow.Task, DefaultEdge> 
-		dag=new ListenableDirectedGraph<easyflow.Task, DefaultEdge>(DefaultEdge.class);
-		workflowUtil=new WorkflowUtilImpl();
 	}
 
 	/**
@@ -276,57 +231,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getWorkflowTemplateFileName() {
-		return workflowTemplateFileName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setWorkflowTemplateFileName(String newWorkflowTemplateFileName) {
-		String oldWorkflowTemplateFileName = workflowTemplateFileName;
-		workflowTemplateFileName = newWorkflowTemplateFileName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE_FILE_NAME, oldWorkflowTemplateFileName, workflowTemplateFileName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getMetadataFileName() {
-		return metadataFileName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMetadataFileName(String newMetadataFileName) {
-		String oldMetadataFileName = metadataFileName;
-		metadataFileName = newMetadataFileName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__METADATA_FILE_NAME, oldMetadataFileName, metadataFileName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EasyFlowTemplate getWorkflowTemplate() {
-		if (workflowTemplate != null && workflowTemplate.eIsProxy()) {
-			InternalEObject oldWorkflowTemplate = (InternalEObject)workflowTemplate;
-			workflowTemplate = (EasyFlowTemplate)eResolveProxy(oldWorkflowTemplate);
-			if (workflowTemplate != oldWorkflowTemplate) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE, oldWorkflowTemplate, workflowTemplate));
-			}
-		}
 		return workflowTemplate;
 	}
 
@@ -335,8 +240,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EasyFlowTemplate basicGetWorkflowTemplate() {
-		return workflowTemplate;
+	public NotificationChain basicSetWorkflowTemplate(EasyFlowTemplate newWorkflowTemplate, NotificationChain msgs) {
+		EasyFlowTemplate oldWorkflowTemplate = workflowTemplate;
+		workflowTemplate = newWorkflowTemplate;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE, oldWorkflowTemplate, newWorkflowTemplate);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -345,10 +256,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public void setWorkflowTemplate(EasyFlowTemplate newWorkflowTemplate) {
-		EasyFlowTemplate oldWorkflowTemplate = workflowTemplate;
-		workflowTemplate = newWorkflowTemplate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE, oldWorkflowTemplate, workflowTemplate));
+		if (newWorkflowTemplate != workflowTemplate) {
+			NotificationChain msgs = null;
+			if (workflowTemplate != null)
+				msgs = ((InternalEObject)workflowTemplate).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE, null, msgs);
+			if (newWorkflowTemplate != null)
+				msgs = ((InternalEObject)newWorkflowTemplate).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE, null, msgs);
+			msgs = basicSetWorkflowTemplate(newWorkflowTemplate, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE, newWorkflowTemplate, newWorkflowTemplate));
 	}
 
 	/**
@@ -357,14 +275,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public EasyFlowConfiguration getConfiguration() {
-		if (configuration != null && configuration.eIsProxy()) {
-			InternalEObject oldConfiguration = (InternalEObject)configuration;
-			configuration = (EasyFlowConfiguration)eResolveProxy(oldConfiguration);
-			if (configuration != oldConfiguration) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EasyflowPackage.WORKFLOW__CONFIGURATION, oldConfiguration, configuration));
-			}
-		}
 		return configuration;
 	}
 
@@ -373,8 +283,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EasyFlowConfiguration basicGetConfiguration() {
-		return configuration;
+	public NotificationChain basicSetConfiguration(EasyFlowConfiguration newConfiguration, NotificationChain msgs) {
+		EasyFlowConfiguration oldConfiguration = configuration;
+		configuration = newConfiguration;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__CONFIGURATION, oldConfiguration, newConfiguration);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -383,10 +299,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public void setConfiguration(EasyFlowConfiguration newConfiguration) {
-		EasyFlowConfiguration oldConfiguration = configuration;
-		configuration = newConfiguration;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__CONFIGURATION, oldConfiguration, configuration));
+		if (newConfiguration != configuration) {
+			NotificationChain msgs = null;
+			if (configuration != null)
+				msgs = ((InternalEObject)configuration).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__CONFIGURATION, null, msgs);
+			if (newConfiguration != null)
+				msgs = ((InternalEObject)newConfiguration).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__CONFIGURATION, null, msgs);
+			msgs = basicSetConfiguration(newConfiguration, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__CONFIGURATION, newConfiguration, newConfiguration));
 	}
 
 	/**
@@ -395,14 +318,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public EasyFlowMetadata getMetadata() {
-		if (metadata != null && metadata.eIsProxy()) {
-			InternalEObject oldMetadata = (InternalEObject)metadata;
-			metadata = (EasyFlowMetadata)eResolveProxy(oldMetadata);
-			if (metadata != oldMetadata) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EasyflowPackage.WORKFLOW__METADATA, oldMetadata, metadata));
-			}
-		}
 		return metadata;
 	}
 
@@ -411,8 +326,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EasyFlowMetadata basicGetMetadata() {
-		return metadata;
+	public NotificationChain basicSetMetadata(EasyFlowMetadata newMetadata, NotificationChain msgs) {
+		EasyFlowMetadata oldMetadata = metadata;
+		metadata = newMetadata;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__METADATA, oldMetadata, newMetadata);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -421,10 +342,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public void setMetadata(EasyFlowMetadata newMetadata) {
-		EasyFlowMetadata oldMetadata = metadata;
-		metadata = newMetadata;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__METADATA, oldMetadata, metadata));
+		if (newMetadata != metadata) {
+			NotificationChain msgs = null;
+			if (metadata != null)
+				msgs = ((InternalEObject)metadata).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__METADATA, null, msgs);
+			if (newMetadata != null)
+				msgs = ((InternalEObject)newMetadata).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__METADATA, null, msgs);
+			msgs = basicSetMetadata(newMetadata, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__METADATA, newMetadata, newMetadata));
 	}
 
 	/**
@@ -433,14 +361,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public EasyFlowImplementationTemplate getImplementationTemplate() {
-		if (implementationTemplate != null && implementationTemplate.eIsProxy()) {
-			InternalEObject oldImplementationTemplate = (InternalEObject)implementationTemplate;
-			implementationTemplate = (EasyFlowImplementationTemplate)eResolveProxy(oldImplementationTemplate);
-			if (implementationTemplate != oldImplementationTemplate) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EasyflowPackage.WORKFLOW__IMPLEMENTATION_TEMPLATE, oldImplementationTemplate, implementationTemplate));
-			}
-		}
 		return implementationTemplate;
 	}
 
@@ -449,8 +369,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EasyFlowImplementationTemplate basicGetImplementationTemplate() {
-		return implementationTemplate;
+	public NotificationChain basicSetImplementationTemplate(EasyFlowImplementationTemplate newImplementationTemplate, NotificationChain msgs) {
+		EasyFlowImplementationTemplate oldImplementationTemplate = implementationTemplate;
+		implementationTemplate = newImplementationTemplate;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__IMPLEMENTATION_TEMPLATE, oldImplementationTemplate, newImplementationTemplate);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -459,10 +385,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public void setImplementationTemplate(EasyFlowImplementationTemplate newImplementationTemplate) {
-		EasyFlowImplementationTemplate oldImplementationTemplate = implementationTemplate;
-		implementationTemplate = newImplementationTemplate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__IMPLEMENTATION_TEMPLATE, oldImplementationTemplate, implementationTemplate));
+		if (newImplementationTemplate != implementationTemplate) {
+			NotificationChain msgs = null;
+			if (implementationTemplate != null)
+				msgs = ((InternalEObject)implementationTemplate).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__IMPLEMENTATION_TEMPLATE, null, msgs);
+			if (newImplementationTemplate != null)
+				msgs = ((InternalEObject)newImplementationTemplate).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__IMPLEMENTATION_TEMPLATE, null, msgs);
+			msgs = basicSetImplementationTemplate(newImplementationTemplate, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__IMPLEMENTATION_TEMPLATE, newImplementationTemplate, newImplementationTemplate));
 	}
 
 	/**
@@ -471,14 +404,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public DataProcessingType getDataProcessingType() {
-		if (dataProcessingType != null && dataProcessingType.eIsProxy()) {
-			InternalEObject oldDataProcessingType = (InternalEObject)dataProcessingType;
-			dataProcessingType = (DataProcessingType)eResolveProxy(oldDataProcessingType);
-			if (dataProcessingType != oldDataProcessingType) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EasyflowPackage.WORKFLOW__DATA_PROCESSING_TYPE, oldDataProcessingType, dataProcessingType));
-			}
-		}
 		return dataProcessingType;
 	}
 
@@ -487,8 +412,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DataProcessingType basicGetDataProcessingType() {
-		return dataProcessingType;
+	public NotificationChain basicSetDataProcessingType(DataProcessingType newDataProcessingType, NotificationChain msgs) {
+		DataProcessingType oldDataProcessingType = dataProcessingType;
+		dataProcessingType = newDataProcessingType;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__DATA_PROCESSING_TYPE, oldDataProcessingType, newDataProcessingType);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -497,10 +428,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated
 	 */
 	public void setDataProcessingType(DataProcessingType newDataProcessingType) {
-		DataProcessingType oldDataProcessingType = dataProcessingType;
-		dataProcessingType = newDataProcessingType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__DATA_PROCESSING_TYPE, oldDataProcessingType, dataProcessingType));
+		if (newDataProcessingType != dataProcessingType) {
+			NotificationChain msgs = null;
+			if (dataProcessingType != null)
+				msgs = ((InternalEObject)dataProcessingType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__DATA_PROCESSING_TYPE, null, msgs);
+			if (newDataProcessingType != null)
+				msgs = ((InternalEObject)newDataProcessingType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EasyflowPackage.WORKFLOW__DATA_PROCESSING_TYPE, null, msgs);
+			msgs = basicSetDataProcessingType(newDataProcessingType, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__DATA_PROCESSING_TYPE, newDataProcessingType, newDataProcessingType));
 	}
 
 	/**
@@ -508,10 +446,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WorkflowUtil getWorkflowUtil() {
+	public IWorkflowUtil getWorkflowUtil() {
 		if (workflowUtil != null && workflowUtil.eIsProxy()) {
 			InternalEObject oldWorkflowUtil = (InternalEObject)workflowUtil;
-			workflowUtil = (WorkflowUtil)eResolveProxy(oldWorkflowUtil);
+			workflowUtil = (IWorkflowUtil)eResolveProxy(oldWorkflowUtil);
 			if (workflowUtil != oldWorkflowUtil) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EasyflowPackage.WORKFLOW__WORKFLOW_UTIL, oldWorkflowUtil, workflowUtil));
@@ -525,7 +463,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WorkflowUtil basicGetWorkflowUtil() {
+	public IWorkflowUtil basicGetWorkflowUtil() {
 		return workflowUtil;
 	}
 
@@ -534,11 +472,23 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setWorkflowUtil(WorkflowUtil newWorkflowUtil) {
-		WorkflowUtil oldWorkflowUtil = workflowUtil;
+	public void setWorkflowUtil(IWorkflowUtil newWorkflowUtil) {
+		IWorkflowUtil oldWorkflowUtil = workflowUtil;
 		workflowUtil = newWorkflowUtil;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, EasyflowPackage.WORKFLOW__WORKFLOW_UTIL, oldWorkflowUtil, workflowUtil));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<DataProcessingType, Task> getLastTaskClassMap() {
+		if (lastTaskClassMap == null) {
+			lastTaskClassMap = new EcoreEMap<DataProcessingType,Task>(EasyflowPackage.Literals.DATA_PROCESSING_TYPE_TO_TASK, DataProcessingTypeToTaskImpl.class, this, EasyflowPackage.WORKFLOW__LAST_TASK_CLASS_MAP);
+		}
+		return lastTaskClassMap;
 	}
 
 	/**
@@ -588,138 +538,38 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public void readWorkflowTemplate() {
-		try {
-            File workflowTpl=new File(workflowTemplateFileName);
-            //System.out.println(workflowTemplateFileName);
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(workflowTpl));
-            String strLine;
-            easyflow.Task rootTask=new TaskImpl();
-            rootTask.setName("Root");
-            EdgeFactory<Task,Edge> ef=dag.getEdgeFactory();
-            dag.addVertex(rootTask);
-            
-            while ((strLine = bufferedReader.readLine()) != null)   {
-            	if (!strLine.startsWith("#")) {
-                    //System.out.println(strLine);
-                    
-                    //System.out.println(strLine);
-                    /*StringTokenizer st = new StringTokenizer(strLine, "\t");
-                    while (st.hasMoreTokens()) {
-                            System.out.println(st.nextToken());
-                    }*/
-
-                    //create eadge of jgrapht object
-                    easyflow.Task curTask=new TaskImpl();
-                    curTask.readTask(strLine);
-                    //System.out.println(curTask.toString());
-                    /*get tasks derived from input data format*/
-                    EList<Task> lastTasks=getWorkflowUtil().getTasksFromLastTaskClass(
-                    		curTask.getDataFormatIn(), curTask.getDataFormatOut());
-                    /*get tasks as defined by parent task definition workflow template file*/
-                    EList<Task> parentTasks=getTaskByName(dag.vertexSet(), strLine.split("\t")[1].split(","));
-                    //parentTasks.addAll(lastTasks);
-                    //System.out.println(lastTasks+" "+parentTasks);
-                    //System.out.println(dag()+" "+curTask.toString());
-                    System.out.println(curTask.getName()+"  #depTasks: "
-                    		+lastTasks.size()+" "+parentTasks.size()
-                    		+" #in/out "+curTask.getDataFormatIn().size()+" "
-                    		+curTask.getDataFormatOut().size());
-					dag.addVertex(curTask);
-					/*add parent Task*/
-					int curEdgeSize=dag.edgeSet().size();
-					addTaskListToDAG(parentTasks, curTask, ef);
-					/*add last Task*/
-					addTaskListToDAG(lastTasks, curTask, ef);
-					/*if (curEdgeSize==dag.edgeSet().size()) {
-						dag.addEdge(rootTask, curTask);
-						//ef.createEdge(rootTask, curTask);
-						System.out.println("Link "+curTask.getName()+" to root node.");
-					}*/
-					
-					System.out.println("Number of nodes: "+dag.vertexSet().size()+" Number of edges: "+dag.edgeSet().size());
-                    //ClassBasedEdgeFactory<Task, DefaultEdge> edgeFactory=new ClassBasedEdgeFactory();
-                    //System.out.println(pipeline.getTaskNumber());
-					
-                    getWorkflowUtil().updateLastTaskClass(curTask.getDataFormatIn(), curTask.getDataFormatOut(), curTask);
-                    //System.out.println(getWorkflowUtil().getLastTaskClassMap().toString());
-                    //System.out.println(defaultListenableGraph.toString());
-                    //System.out.println(getWorkflowUtil().getLastTaskClassMap().toString());
-            	}
-            }
-            firstDAGWalker();
-    } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-    } catch (IOException e) {
-    // TODO Auto-generated catch block
-            e.printStackTrace();
-    /*} finally {
-            if (bufferedReader != null) {
-                    bufferedReader.close();
-            }*/
-    }
-
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
-	public void addTaskListToDAG(EList<Task> lastTasks, Task curTask, EdgeFactory ef) {
-		Iterator<Task> it=lastTasks.iterator();
-		while (it.hasNext()) {
-			Task lastTask=it.next();
-			if (dag.containsVertex(lastTask)) {
-				System.out.println("Last Task: add edge: "+curTask.getName()+"->"+lastTask.getName());
-				Object res=dag.addEdge(lastTask, curTask);
-				//Edge e=(Edge) ef.createEdge(lastTask, curTask);
-				Edge e=(Edge) dag.getEdge(lastTask, curTask);
-				e.setSource(lastTask);
-				e.setTarget(curTask);
-				//System.out.println("addEdge: "+res);
-			}
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE:
+				return basicSetWorkflowTemplate(null, msgs);
+			case EasyflowPackage.WORKFLOW__CONFIGURATION:
+				return basicSetConfiguration(null, msgs);
+			case EasyflowPackage.WORKFLOW__METADATA:
+				return basicSetMetadata(null, msgs);
+			case EasyflowPackage.WORKFLOW__IMPLEMENTATION_TEMPLATE:
+				return basicSetImplementationTemplate(null, msgs);
+			case EasyflowPackage.WORKFLOW__DATA_PROCESSING_TYPE:
+				return basicSetDataProcessingType(null, msgs);
+			case EasyflowPackage.WORKFLOW__LAST_TASK_CLASS_MAP:
+				return ((InternalEList<?>)getLastTaskClassMap()).basicRemove(otherEnd, msgs);
 		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
-	}
-	
-	public void firstDAGWalker() {
-		/*
-		KruskalMinimumSpanningTree minSpanTree=new KruskalMinimumSpanningTree(dag);
-		Set<DefaultEdge> edgeSet=minSpanTree.getEdgeSet();
-		Iterator<DefaultEdge> it=edgeSet.iterator();
-		while (it.hasNext()) {
-			DefaultEdge edge=it.next();
-			System.out.println(edge.toString());
-			
-		}*/
-		
-		BreadthFirstIterator breadthFirstIt=new BreadthFirstIterator(dag);
-		while (breadthFirstIt.hasNext()){
-			Task t=(Task) breadthFirstIt.next();
-			System.out.print(t.getName()+" ");
-			Set<DefaultEdge> edgeSet=dag.incomingEdgesOf(t);
-			Iterator<DefaultEdge> it=edgeSet.iterator();
-			while (it.hasNext()) {
-				DefaultEdge edge=it.next();
-				System.out.print(edge.getLeafCount()+" "+edge.getLevel()+" "+edge.getAttributes()+" "
-						);
-				//if (! edge.isRoot()) {
-					Task st=(Task) edge.getSource();
-					System.out.print(": "+st.getName());
-				//}
-			}
-			System.out.println("	#####");
-		}
-	}
-	
-	public EList<Task> getTaskByName(Set<Task> taskSet, String[] taskNames) {
-		Iterator<Task> it=taskSet.iterator();
-		EList<Task> tasks=new BasicEList<Task>();
-		while (it.hasNext()) {
-			Task t=it.next();
-			for (int i=0;i<taskNames.length;i++)
-				if (t.getName().equals(taskNames[i])) tasks.add(t);
-		}
-		return tasks;
-	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -732,28 +582,22 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return getName();
 			case EasyflowPackage.WORKFLOW__DAG:
 				return getDag();
-			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE_FILE_NAME:
-				return getWorkflowTemplateFileName();
-			case EasyflowPackage.WORKFLOW__METADATA_FILE_NAME:
-				return getMetadataFileName();
 			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE:
-				if (resolve) return getWorkflowTemplate();
-				return basicGetWorkflowTemplate();
+				return getWorkflowTemplate();
 			case EasyflowPackage.WORKFLOW__CONFIGURATION:
-				if (resolve) return getConfiguration();
-				return basicGetConfiguration();
+				return getConfiguration();
 			case EasyflowPackage.WORKFLOW__METADATA:
-				if (resolve) return getMetadata();
-				return basicGetMetadata();
+				return getMetadata();
 			case EasyflowPackage.WORKFLOW__IMPLEMENTATION_TEMPLATE:
-				if (resolve) return getImplementationTemplate();
-				return basicGetImplementationTemplate();
+				return getImplementationTemplate();
 			case EasyflowPackage.WORKFLOW__DATA_PROCESSING_TYPE:
-				if (resolve) return getDataProcessingType();
-				return basicGetDataProcessingType();
+				return getDataProcessingType();
 			case EasyflowPackage.WORKFLOW__WORKFLOW_UTIL:
 				if (resolve) return getWorkflowUtil();
 				return basicGetWorkflowUtil();
+			case EasyflowPackage.WORKFLOW__LAST_TASK_CLASS_MAP:
+				if (coreType) return getLastTaskClassMap();
+				else return getLastTaskClassMap().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -772,12 +616,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case EasyflowPackage.WORKFLOW__DAG:
 				setDag((ListenableDirectedGraph)newValue);
 				return;
-			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE_FILE_NAME:
-				setWorkflowTemplateFileName((String)newValue);
-				return;
-			case EasyflowPackage.WORKFLOW__METADATA_FILE_NAME:
-				setMetadataFileName((String)newValue);
-				return;
 			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE:
 				setWorkflowTemplate((EasyFlowTemplate)newValue);
 				return;
@@ -794,7 +632,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				setDataProcessingType((DataProcessingType)newValue);
 				return;
 			case EasyflowPackage.WORKFLOW__WORKFLOW_UTIL:
-				setWorkflowUtil((WorkflowUtil)newValue);
+				setWorkflowUtil((IWorkflowUtil)newValue);
+				return;
+			case EasyflowPackage.WORKFLOW__LAST_TASK_CLASS_MAP:
+				((EStructuralFeature.Setting)getLastTaskClassMap()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -814,12 +655,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case EasyflowPackage.WORKFLOW__DAG:
 				setDag(DAG_EDEFAULT);
 				return;
-			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE_FILE_NAME:
-				setWorkflowTemplateFileName(WORKFLOW_TEMPLATE_FILE_NAME_EDEFAULT);
-				return;
-			case EasyflowPackage.WORKFLOW__METADATA_FILE_NAME:
-				setMetadataFileName(METADATA_FILE_NAME_EDEFAULT);
-				return;
 			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE:
 				setWorkflowTemplate((EasyFlowTemplate)null);
 				return;
@@ -836,7 +671,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				setDataProcessingType((DataProcessingType)null);
 				return;
 			case EasyflowPackage.WORKFLOW__WORKFLOW_UTIL:
-				setWorkflowUtil((WorkflowUtil)null);
+				setWorkflowUtil((IWorkflowUtil)null);
+				return;
+			case EasyflowPackage.WORKFLOW__LAST_TASK_CLASS_MAP:
+				getLastTaskClassMap().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -854,10 +692,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case EasyflowPackage.WORKFLOW__DAG:
 				return DAG_EDEFAULT == null ? dag != null : !DAG_EDEFAULT.equals(dag);
-			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE_FILE_NAME:
-				return WORKFLOW_TEMPLATE_FILE_NAME_EDEFAULT == null ? workflowTemplateFileName != null : !WORKFLOW_TEMPLATE_FILE_NAME_EDEFAULT.equals(workflowTemplateFileName);
-			case EasyflowPackage.WORKFLOW__METADATA_FILE_NAME:
-				return METADATA_FILE_NAME_EDEFAULT == null ? metadataFileName != null : !METADATA_FILE_NAME_EDEFAULT.equals(metadataFileName);
 			case EasyflowPackage.WORKFLOW__WORKFLOW_TEMPLATE:
 				return workflowTemplate != null;
 			case EasyflowPackage.WORKFLOW__CONFIGURATION:
@@ -870,6 +704,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return dataProcessingType != null;
 			case EasyflowPackage.WORKFLOW__WORKFLOW_UTIL:
 				return workflowUtil != null;
+			case EasyflowPackage.WORKFLOW__LAST_TASK_CLASS_MAP:
+				return lastTaskClassMap != null && !lastTaskClassMap.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -888,10 +724,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		result.append(name);
 		result.append(", dag: ");
 		result.append(dag);
-		result.append(", workflowTemplateFileName: ");
-		result.append(workflowTemplateFileName);
-		result.append(", metadataFileName: ");
-		result.append(metadataFileName);
 		result.append(')');
 		return result.toString();
 	}

@@ -20,8 +20,8 @@ import junit.textui.TestRunner;
  * <p>
  * The following operations are tested:
  * <ul>
- *   <li>{@link easyflow.Task#readTask() <em>Read Task</em>}</li>
- *   <li>{@link easyflow.Task#Task(java.lang.String) <em>Task</em>}</li>
+ *   <li>{@link easyflow.Task#readTask(java.lang.String) <em>Read Task</em>}</li>
+ *   <li>{@link easyflow.Task#getFilesIn(easyflow.DataFormat) <em>Get Files In</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -98,26 +98,26 @@ public class TaskTest extends TestCase {
 	}
 
 	/**
-	 * Tests the '{@link easyflow.Task#readTask() <em>Read Task</em>}' operation.
+	 * Tests the '{@link easyflow.Task#readTask(java.lang.String) <em>Read Task</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see easyflow.Task#readTask()
+	 * @see easyflow.Task#readTask(java.lang.String)
 	 * @generated
 	 */
-	public void testReadTask() {
+	public void testReadTask__String() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
 
 	/**
-	 * Tests the '{@link easyflow.Task#Task(java.lang.String) <em>Task</em>}' operation.
+	 * Tests the '{@link easyflow.Task#getFilesIn(easyflow.DataFormat) <em>Get Files In</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see easyflow.Task#Task(java.lang.String)
+	 * @see easyflow.Task#getFilesIn(easyflow.DataFormat)
 	 * @generated
 	 */
-	public void testTask__String() {
+	public void testGetFilesIn__DataFormat() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();

@@ -6,8 +6,27 @@
  */
 package easyflow.tests;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jgraph.graph.Edge;
+import org.jgrapht.graph.ListenableDirectedGraph;
+
+import easyflow.DataProcessingType;
+import easyflow.EasyFlowConfiguration;
+import easyflow.EasyFlowImplementationTemplate;
+import easyflow.EasyFlowMetadata;
+import easyflow.EasyFlowTemplate;
 import easyflow.EasyflowFactory;
+import easyflow.Task;
 import easyflow.Workflow;
+import easyflow.impl.WorkflowUtilImpl;
+import easyflow.impl.EasyFlowConfigurationImpl;
+import easyflow.impl.EasyFlowImplementationTemplateImpl;
+import easyflow.impl.EasyFlowMetadataImpl;
+import easyflow.impl.EasyFlowTemplateImpl;
+import easyflow.impl.EasyflowFactoryImpl;
 import easyflow.impl.WorkflowImpl;
 
 import junit.framework.TestCase;
@@ -26,13 +45,12 @@ import junit.textui.TestRunner;
  *   <li>{@link easyflow.Workflow#writeMakeflow() <em>Write Makeflow</em>}</li>
  *   <li>{@link easyflow.Workflow#writeAWSCloudFormation() <em>Write AWS Cloud Formation</em>}</li>
  *   <li>{@link easyflow.Workflow#readWorkflowTemplate() <em>Read Workflow Template</em>}</li>
- *   <li>{@link easyflow.Workflow#Task(java.lang.String, java.lang.String, java.lang.String) <em>Task</em>}</li>
  * </ul>
  * </p>
  * @generated
  */
 public class WorkflowTest extends TestCase {
-
+	protected static WorkflowUtilImpl workflowUtil=new WorkflowUtilImpl();
 	/**
 	 * The fixture for this Workflow test case.
 	 * <!-- begin-user-doc -->
@@ -159,29 +177,48 @@ public class WorkflowTest extends TestCase {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see easyflow.Workflow#readWorkflowTemplate()
-	 * @generated
 	 */
 	public void testReadWorkflowTemplate() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
-		Workflow testWorkflow=new WorkflowImpl();
-		testWorkflow.setMetadataFileName("/usr/home/heinz/workspace/easyflow_bak/metadata.cfg");
-		testWorkflow.setWorkflowTemplateFileName("/usr/home/heinz/workspace/easyflow_bak/workflow.wtpl");
 		
-		testWorkflow.readWorkflowTemplate();
-	}
-
-	/**
-	 * Tests the '{@link easyflow.Workflow#Task(java.lang.String, java.lang.String, java.lang.String) <em>Task</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.Workflow#Task(java.lang.String, java.lang.String, java.lang.String)
-	 * @generated
-	 */
-	public void testTask__String_String_String() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+		EasyflowFactoryImpl ef=new EasyflowFactoryImpl();
+		//EasyFlowConfiguration projectCfg=new EasyFlowConfigurationImpl();
+		EasyFlowConfiguration projectCfg=ef.createEasyFlowConfiguration();
+		projectCfg.setFileName("/usr/home/heinz/workspace/easyflow_bak/main.json");
+		try {
+			projectCfg.configFileReader();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(projectCfg.toString());
+		//EasyFlowTemplate easyflowTpl = new EasyFlowTemplateImpl();
+		Workflow testWorkflow=ef.createWorkflow();;
+		System.out.println(projectCfg.getConfigMap());
+		
+		//System.exit(1);
+		EasyFlowTemplate easyflowTpl =ef.createEasyFlowTemplate(); 
+		easyflowTpl.setFileName(projectCfg.getConfigMap().get("workflowTemplateFile"));
+		//ListenableDirectedGraph<Task,Edge> dag=
+		System.out.println(testWorkflow.getLastTaskClassMap());
+		//(Map<DataProcessingType, Task>) testWorkflow.getLastTaskClassMap())
+		Map<DataProcessingType, Task> lastTaskClassMap=new HashMap<DataProcessingType, Task>();
+		testWorkflow.setDag(easyflowTpl.generateDAGFromTemplateFile(lastTaskClassMap));
+		workflowUtil.checkDAG(testWorkflow.getDag());
+		//testWorkflow.setL
+		//testWorkflow.set
+		/*read the metadata
+		EasyFlowMetadata metadataTpl = ef.createEasyFlowMetadata();
+		metadataTpl.setFileName(projectCfg.getConfigMap().get("metadataFile"));
+		*/
+		EasyFlowImplementationTemplate implTpl =ef.createEasyFlowImplementationTemplate(); 
+		implTpl.setFileName(projectCfg.getConfigMap().get("implementationTemplateFile"));
+		implTpl.templateFileParser(testWorkflow.getDag());
+		workflowUtil.firstDAGWalker(testWorkflow.getDag());
+		//testWorkflow.setConfiguration(projectCfg);
+		
+		//testWorkflow.readWorkflowTemplate();
 	}
 
 } //WorkflowTest

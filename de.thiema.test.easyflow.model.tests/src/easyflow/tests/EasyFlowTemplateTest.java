@@ -20,7 +20,7 @@ import junit.textui.TestRunner;
  * <p>
  * The following operations are tested:
  * <ul>
- *   <li>{@link easyflow.EasyFlowTemplate#templateParser() <em>Template Parser</em>}</li>
+ *   <li>{@link easyflow.EasyFlowTemplate#generateDAGFromTemplateFile() <em>Generate DAG From Template File</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -97,13 +97,13 @@ public class EasyFlowTemplateTest extends TestCase {
 	}
 
 	/**
-	 * Tests the '{@link easyflow.EasyFlowTemplate#templateParser() <em>Template Parser</em>}' operation.
+	 * Tests the '{@link easyflow.EasyFlowTemplate#generateDAGFromTemplateFile() <em>Generate DAG From Template File</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see easyflow.EasyFlowTemplate#templateParser()
+	 * @see easyflow.EasyFlowTemplate#generateDAGFromTemplateFile()
 	 * @generated
 	 */
-	public void testTemplateParser() {
+	public void testGenerateDAGFromTemplateFile() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();

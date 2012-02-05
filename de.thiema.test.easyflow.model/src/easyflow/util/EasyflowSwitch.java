@@ -137,9 +137,39 @@ public class EasyflowSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EasyflowPackage.WORKFLOW_UTIL: {
-				WorkflowUtil workflowUtil = (WorkflowUtil)theEObject;
-				T result = caseWorkflowUtil(workflowUtil);
+			case EasyflowPackage.IWORKFLOW_UTIL: {
+				IWorkflowUtil iWorkflowUtil = (IWorkflowUtil)theEObject;
+				T result = caseIWorkflowUtil(iWorkflowUtil);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case EasyflowPackage.COMMAND_LINE: {
+				CommandLine commandLine = (CommandLine)theEObject;
+				T result = caseCommandLine(commandLine);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case EasyflowPackage.COMMAND_ARGUMENT: {
+				CommandArgument commandArgument = (CommandArgument)theEObject;
+				T result = caseCommandArgument(commandArgument);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case EasyflowPackage.TOOL: {
+				Tool tool = (Tool)theEObject;
+				T result = caseTool(tool);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case EasyflowPackage.ARGUMENT: {
+				Argument argument = (Argument)theEObject;
+				T result = caseArgument(argument);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case EasyflowPackage.CSV: {
+				CSV csv = (CSV)theEObject;
+				T result = caseCSV(csv);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -268,17 +298,92 @@ public class EasyflowSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Workflow Util</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>IWorkflow Util</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Workflow Util</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>IWorkflow Util</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseWorkflowUtil(WorkflowUtil object) {
+	public T caseIWorkflowUtil(IWorkflowUtil object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Command Line</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Command Line</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCommandLine(CommandLine object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Command Argument</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Command Argument</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCommandArgument(CommandArgument object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Tool</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Tool</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTool(Tool object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Argument</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Argument</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseArgument(Argument object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CSV</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CSV</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCSV(CSV object) {
 		return null;
 	}
 

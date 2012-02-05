@@ -89,13 +89,49 @@ public interface EasyflowFactory extends EFactory {
 	EasyFlowImplementationTemplate createEasyFlowImplementationTemplate();
 
 	/**
-	 * Returns a new object of class '<em>Workflow Util</em>'.
+	 * Returns a new object of class '<em>Command Line</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Workflow Util</em>'.
+	 * @return a new object of class '<em>Command Line</em>'.
 	 * @generated
 	 */
-	WorkflowUtil createWorkflowUtil();
+	CommandLine createCommandLine();
+
+	/**
+	 * Returns a new object of class '<em>Command Argument</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Command Argument</em>'.
+	 * @generated
+	 */
+	CommandArgument createCommandArgument();
+
+	/**
+	 * Returns a new object of class '<em>Tool</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Tool</em>'.
+	 * @generated
+	 */
+	Tool createTool();
+
+	/**
+	 * Returns a new object of class '<em>Argument</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Argument</em>'.
+	 * @generated
+	 */
+	Argument createArgument();
+
+	/**
+	 * Returns a new object of class '<em>CSV</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CSV</em>'.
+	 * @generated
+	 */
+	CSV createCSV();
 
 	/**
 	 * Returns the package supported by this factory.

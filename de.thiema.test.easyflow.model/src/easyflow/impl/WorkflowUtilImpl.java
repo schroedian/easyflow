@@ -10,7 +10,7 @@ import easyflow.DataFormat;
 import easyflow.DataProcessingType;
 import easyflow.EasyflowPackage;
 import easyflow.Task;
-import easyflow.WorkflowUtil;
+import easyflow.IWorkflowUtil;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import java.util.Map.Entry;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -40,79 +42,101 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.jgraph.graph.DefaultEdge;
+import org.jgraph.graph.Edge;
+import org.jgrapht.EdgeFactory;
+import org.jgrapht.graph.ListenableDirectedGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Workflow Util</b></em>'.
+ * An implementation of the model object '<em><b>I Workflow Util</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link easyflow.impl.WorkflowUtilImpl#getLastTaskClassMap <em>Last Task Class Map</em>}</li>
- * </ul>
  * </p>
- *
+ * @implements IWorkflowUtil
  * @generated
  */
 
-public class WorkflowUtilImpl extends EObjectImpl implements WorkflowUtil {
+public class WorkflowUtilImpl extends EObjectImpl implements IWorkflowUtil {
 	static Logger logger=Logger.getLogger("WorkflowLogger");
 	/**
-	 * The cached value of the '{@link #getLastTaskClassMap() <em>Last Task Class Map</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLastTaskClassMap()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<DataProcessingType, Task> lastTaskClassMap;
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected WorkflowUtilImpl() {
+	public WorkflowUtilImpl() {
 		super();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
-	protected EClass eStaticClass() {
-		return EasyflowPackage.Literals.WORKFLOW_UTIL;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EMap<DataProcessingType, Task> getLastTaskClassMap() {
-		if (lastTaskClassMap == null) {
-			lastTaskClassMap = new EcoreEMap<DataProcessingType,Task>(EasyflowPackage.Literals.DATA_PROCESSING_TYPE_TO_TASK, DataProcessingTypeToTaskImpl.class, this, EasyflowPackage.WORKFLOW_UTIL__LAST_TASK_CLASS_MAP);
-		}
-		return lastTaskClassMap;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<Task> getAllTasks() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		// TODO Auto-generated method stub
+		return null;
 	}
-
+	
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 */
-	public void updateLastTaskClass(EList<DataFormat> dataFormatIn, EList<DataFormat> dataFormatOut, Task task) {
+	public EList<Task> getTasksFromLastTaskClass(EList<DataFormat> dataFormatIn,
+			EList<DataFormat> dataFormatOut, Map<DataProcessingType, Task> lastTaskClassMap) {
+		EList<Task> tasks=(EList<Task>) new BasicEList<Task>();
+		Iterator<DataFormat> in=dataFormatIn.iterator();
+		while (in.hasNext()) {
+			//System.out.println("in "+i++);
+			DataFormat dFI=in.next();
+			Iterator<DataFormat> out=dataFormatOut.iterator();
+			while (out.hasNext()) {
+				//System.out.println("out "+j++);	
+				DataProcessingType myDPT=new DataProcessingTypeImpl();
+				
+				DataFormat dFO=out.next();
+				myDPT.setDataFormatIn(dFI);
+				myDPT.setDataFormatOut(dFO);
+				
+				Task t=getTaskFromLastTaskClassMap(myDPT, lastTaskClassMap);
+				if (t!=null) {
+					tasks.add(t);
+					
+				}
+			}	
+		}
+		return tasks;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 */
+	public Task getTaskFromLastTaskClassMap(DataProcessingType dataProcessingTypeIn, Map<DataProcessingType, Task> lastTaskClassMap) {
+		//Iterator<Entry<DataProcessingType, Task>> it=getTaskClassMap
+		Iterator<DataProcessingType> it=lastTaskClassMap.keySet().iterator();
+		Map<DataFormat,Task> tmpMap=new HashMap<DataFormat,Task>();
+		Task lastTask=null;
+		while (it.hasNext()) {
+			DataProcessingType myDPT=it.next();
+			//logger.info(myEntry.getKey().toString()+" "+dataProcessingTypeIn.getDataFormatIn()+" "+dataProcessingType.getDataFormatOut());
+			if (myDPT.isConvertableTo(dataProcessingTypeIn))
+				if (tmpMap.isEmpty()) {
+					tmpMap.put(myDPT.getDataFormatIn(), lastTaskClassMap.get(myDPT));
+					lastTask=lastTaskClassMap.get(myDPT);
+				} else if (myDPT.getDataFormatOut().equals(dataProcessingTypeIn.getDataFormatIn()))
+					lastTask=lastTaskClassMap.get(myDPT);
+		}
+		
+		return lastTask;
+
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 */
+	public void updateLastTaskClass(EList<DataFormat> dataFormatIn, EList<DataFormat> dataFormatOut, Task task,
+			Map<DataProcessingType, Task> lastTaskClassMap) {
 		Iterator<DataFormat> in=dataFormatIn.iterator();
 		
 
@@ -130,7 +154,7 @@ public class WorkflowUtilImpl extends EObjectImpl implements WorkflowUtil {
 				myDPT.setDataFormatIn(dFI);
 				myDPT.setDataFormatOut(dFO);
 				//logger.info("Update Last Task Class Map with: "+dFI+" "+dFO+" "+task.getName());
-				updateLastTaskClassMap(myDPT, task);
+				updateLastTaskClassMap(myDPT, task, lastTaskClassMap);
 				//printLastTaskClassMap();
 			}
 		}
@@ -140,155 +164,164 @@ public class WorkflowUtilImpl extends EObjectImpl implements WorkflowUtil {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 */
-	public void updateLastTaskClassMap(DataProcessingType dataProcessingType, Task task) {
-		
-		if (getLastTaskClassMap().contains(dataProcessingType))
-			getLastTaskClassMap().remove(dataProcessingType);
-		getLastTaskClassMap().put(dataProcessingType, task);
+	public void updateLastTaskClassMap(DataProcessingType dataProcessingType, Task task,
+			Map<DataProcessingType, Task> lastTaskClassMap) {
+
+		if (lastTaskClassMap.keySet().contains(dataProcessingType))
+			lastTaskClassMap.remove(dataProcessingType);
+		lastTaskClassMap.put(dataProcessingType, task);
 		
 	}
 
-	public void printLastTaskClassMap() {
-		Iterator<Entry<DataProcessingType,Task>> it=getLastTaskClassMap().iterator();
-		while (it.hasNext()) {
-			Entry<DataProcessingType,Task> myEntry=it.next();
-			System.out.println(myEntry.getKey().toString()+" "+myEntry.getValue().getName());
-		}
-	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 */
-	public EList<Task> getTasksFromLastTaskClass(EList<DataFormat> dataFormatIn,
-			EList<DataFormat> dataFormatOut) {
-		EList<Task> tasks=(EList<Task>) new BasicEList<Task>();
-		Iterator<DataFormat> in=dataFormatIn.iterator();
-		while (in.hasNext()) {
-			//System.out.println("in "+i++);
-			DataFormat dFI=in.next();
-			Iterator<DataFormat> out=dataFormatOut.iterator();
-			while (out.hasNext()) {
-				//System.out.println("out "+j++);	
-				DataProcessingType myDPT=new DataProcessingTypeImpl();
+	public void addTaskListToDAG(ListenableDirectedGraph dag, 
+			EList<Task> lastTasks, Task curTask
+			) {//EdgeFactory ef) {
+		Iterator<Task> it=lastTasks.iterator();
+		while (it.hasNext()) {
+			Task lastTask=it.next();
+			if (dag.containsVertex(lastTask)) {
+				//System.out.println("Last Task: add edge: "+curTask.getName()+"->"+lastTask.getName());
+				Object res=dag.addEdge(lastTask, curTask);
+				//Edge e1=(Edge) ((EdgeFactory) ef).createEdge(lastTask, curTask);
+				Edge e=(Edge) dag.getEdge(lastTask, curTask);
+				e.setSource(lastTask);
+				e.setTarget(curTask);
+				//System.out.println("addEdge: "+res);
+			}
+		}
+
+	}
+	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 */
+	
+	public EList<Task> getTaskByName(Set taskSet, String rawTaskNames) {
+		String[] taskNames=rawTaskNames.split(",");
+		Iterator<Task> it=taskSet.iterator();
+		EList<Task> tasks=new BasicEList<Task>();
+		while (it.hasNext()) {
+			Task t=it.next();
+			//Iterator<String> its=taskNames.iterator();
+			for (int i=0;i<taskNames.length;i++) {
+			//while (it.hasNext())
 				
-				DataFormat dFO=out.next();
-				myDPT.setDataFormatIn(dFI);
-				myDPT.setDataFormatOut(dFO);
-				
-				Task t=getTaskFromLastTaskClassMap(myDPT);
-				if (t!=null) {
-					tasks.add(t);
-					
-				}
-			}	
+				//System.out.println(t+" "+ tTest);
+				if (t.getName().equals(taskNames[i])) tasks.add(t);
+			}
 		}
 		return tasks;
 	}
-
-
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 */
-	public Task getTaskFromLastTaskClassMap(DataProcessingType dataProcessingTypeIn) {
-		Iterator<Entry<DataProcessingType, Task>> it=getLastTaskClassMap().iterator();
-		Map<DataFormat,Task> tmpMap=new HashMap<DataFormat,Task>();
-		Task lastTask=null;
+	public void printLastTaskClassMap(Map<DataProcessingType, Task> lastTaskClassMap) {
+		Iterator<DataProcessingType> it=lastTaskClassMap.keySet().iterator();
 		while (it.hasNext()) {
-			Entry<DataProcessingType, Task> myEntry=it.next();
-			//logger.info(myEntry.getKey().toString()+" "+dataProcessingTypeIn.getDataFormatIn()+" "+dataProcessingType.getDataFormatOut());
-			if (myEntry.getKey().isConvertableTo(dataProcessingTypeIn))
-				if (tmpMap.isEmpty()) {
-					tmpMap.put(myEntry.getKey().getDataFormatIn(), myEntry.getValue());
-					lastTask=myEntry.getValue();
-				} else if (myEntry.getKey().getDataFormatOut().equals(dataProcessingTypeIn.getDataFormatIn()))
-					lastTask=myEntry.getValue();
+			DataProcessingType myDPT=it.next();
+			System.out.println(myDPT.toString()+" "+lastTaskClassMap.get(myDPT).toString());
 		}
+	}
+	
+	
+
+	public String getCommandLine(ListenableDirectedGraph dag, Task t) {
 		
-		return lastTask;
-
-	}
-
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case EasyflowPackage.WORKFLOW_UTIL__LAST_TASK_CLASS_MAP:
-				return ((InternalEList<?>)getLastTaskClassMap()).basicRemove(otherEnd, msgs);
+		String cmd="";
+		Set<Edge> edgeSet=dag.edgesOf(t);
+		Iterator<Edge> edgeIt=edgeSet.iterator();
+		while (edgeIt.hasNext()) {
+			Edge edge=edgeIt.next();
+			Task task=(Task) edge.getSource();
+			Iterator<DataFormat> dataFormatIt=task.getDataFormatIn().iterator();
+			//while (dataFormatIt.hasNext()) {
+			//	task.getFilesIn(dataFormatIt.next());
+			//}
+			
 		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case EasyflowPackage.WORKFLOW_UTIL__LAST_TASK_CLASS_MAP:
-				if (coreType) return getLastTaskClassMap();
-				else return getLastTaskClassMap().map();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case EasyflowPackage.WORKFLOW_UTIL__LAST_TASK_CLASS_MAP:
-				((EStructuralFeature.Setting)getLastTaskClassMap()).set(newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case EasyflowPackage.WORKFLOW_UTIL__LAST_TASK_CLASS_MAP:
-				getLastTaskClassMap().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case EasyflowPackage.WORKFLOW_UTIL__LAST_TASK_CLASS_MAP:
-				return lastTaskClassMap != null && !lastTaskClassMap.isEmpty();
-		}
-		return super.eIsSet(featureID);
+		return cmd;
 	}
 	
+	
+	public void checkDAG(ListenableDirectedGraph dag) {
+		/*
+		KruskalMinimumSpanningTree minSpanTree=new KruskalMinimumSpanningTree(dag);
+		Set<DefaultEdge> edgeSet=minSpanTree.getEdgeSet();
+		Iterator<DefaultEdge> it=edgeSet.iterator();
+		while (it.hasNext()) {
+			DefaultEdge edge=it.next();
+			System.out.println(edge.toString());
+			
+		}*/
+		
+		BreadthFirstIterator breadthFirstIt=new BreadthFirstIterator(dag);
+		while (breadthFirstIt.hasNext()){
+			Task t=(Task) breadthFirstIt.next();
+			System.out.print(t.getName()+" ");
+			Set<DefaultEdge> edgeSet=dag.incomingEdgesOf(t);
+			Iterator<DefaultEdge> it=edgeSet.iterator();
+			while (it.hasNext()) {
+				DefaultEdge edge=it.next();
+				System.out.print(edge.getLeafCount()+" "+
+						edge.getLevel()+" "+
+						edge.getAttributes()
+						);
+				//if (! edge.isRoot()) {
+					Task st=(Task) edge.getSource();
+					t.getParentTasks().add(st);
+					System.out.print(": "+st.getName());
+				//}
+			}
+			System.out.println("	#####");
+		}
+	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *//*
+	public void firstDAGWalker(ListenableDirectedGraph dag) {
+		/*
+		KruskalMinimumSpanningTree minSpanTree=new KruskalMinimumSpanningTree(dag);
+		Set<DefaultEdge> edgeSet=minSpanTree.getEdgeSet();
+		Iterator<DefaultEdge> it=edgeSet.iterator();
+		while (it.hasNext()) {
+			DefaultEdge edge=it.next();
+			System.out.println(edge.toString());
+			
+		}*/
+		
+		BreadthFirstIterator breadthFirstIt=new BreadthFirstIterator(dag);
+		while (breadthFirstIt.hasNext()){
+			Task t=(Task) breadthFirstIt.next();
+			System.out.print(t.getName()+" ");
+			Set<DefaultEdge> edgeSet=dag.incomingEdgesOf(t);
+			Iterator<DefaultEdge> it=edgeSet.iterator();
+			while (it.hasNext()) {
+				DefaultEdge edge=it.next();
+				System.out.print(edge.getLeafCount()+" "+
+						edge.getLevel()+" "+
+						edge.getAttributes()
+						);
+				//if (! edge.isRoot()) {
+					Task st=(Task) edge.getSource();
+					t.getParentTasks().add(st);
+					System.out.print(": "+st.getName());
+				//}
+			}
+			System.out.println("	#####");
+		}
+	}
+	
+
+	
+
+	
+	/*
 	public String getTask1(DataFormat dataFormatIn, DataFormat dataFormatOut) {
 		
 		Iterator<DataProcessingType> it =lastTaskClassMap.keySet().iterator();

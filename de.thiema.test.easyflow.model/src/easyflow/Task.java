@@ -18,14 +18,15 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link easyflow.Task#getName <em>Name</em>}</li>
- *   <li>{@link easyflow.Task#getDataCriterion <em>Data Criterion</em>}</li>
  *   <li>{@link easyflow.Task#getDataFormatIn <em>Data Format In</em>}</li>
  *   <li>{@link easyflow.Task#getDataFormatOut <em>Data Format Out</em>}</li>
  *   <li>{@link easyflow.Task#getCardinalityIn <em>Cardinality In</em>}</li>
  *   <li>{@link easyflow.Task#getCardinalityOut <em>Cardinality Out</em>}</li>
+ *   <li>{@link easyflow.Task#getDataCriterion <em>Data Criterion</em>}</li>
  *   <li>{@link easyflow.Task#getIsMultipleInstanceOfDataCriterion <em>Is Multiple Instance Of Data Criterion</em>}</li>
  *   <li>{@link easyflow.Task#getSplitCriterion <em>Split Criterion</em>}</li>
  *   <li>{@link easyflow.Task#getTraversalCriterion <em>Traversal Criterion</em>}</li>
+ *   <li>{@link easyflow.Task#getCommandLine <em>Command Line</em>}</li>
  *   <li>{@link easyflow.Task#getParentTasks <em>Parent Tasks</em>}</li>
  * </ul>
  * </p>
@@ -230,7 +231,7 @@ public interface Task extends EObject {
 	EList<TraversalCriterion> getTraversalCriterion();
 
 	/**
-	 * Returns the value of the '<em><b>Parent Tasks</b></em>' reference list.
+	 * Returns the value of the '<em><b>Parent Tasks</b></em>' containment reference list.
 	 * The list contents are of type {@link easyflow.Task}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -238,12 +239,28 @@ public interface Task extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parent Tasks</em>' reference list.
+	 * @return the value of the '<em>Parent Tasks</em>' containment reference list.
 	 * @see easyflow.EasyflowPackage#getTask_ParentTasks()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Task> getParentTasks();
+
+	/**
+	 * Returns the value of the '<em><b>Command Line</b></em>' containment reference list.
+	 * The list contents are of type {@link easyflow.CommandLine}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Command Line</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Command Line</em>' containment reference list.
+	 * @see easyflow.EasyflowPackage#getTask_CommandLine()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<CommandLine> getCommandLine();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -252,5 +269,13 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void readTask(String wtplLine);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<String> getFilesIn(DataFormat dataFormatIn);
 
 } // Task

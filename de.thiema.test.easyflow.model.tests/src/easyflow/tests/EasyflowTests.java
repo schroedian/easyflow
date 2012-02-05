@@ -39,6 +39,10 @@ public class EasyflowTests extends TestSuite {
 		suite.addTestSuite(TaskTest.class);
 		suite.addTestSuite(EasyFlowTemplateTest.class);
 		suite.addTestSuite(EasyFlowConfigurationTest.class);
+		suite.addTestSuite(EasyFlowMetadataTest.class);
+		suite.addTestSuite(DataProcessingTypeTest.class);
+		suite.addTestSuite(EasyFlowImplementationTemplateTest.class);
+		suite.addTestSuite(CommandLineTest.class);
 		return suite;
 	}
 
