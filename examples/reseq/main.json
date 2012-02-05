@@ -1,0 +1,35 @@
+{
+  "project" : {
+#####configFiles########
+    "baseDir" : "/home/heinz/workspace/easyflow_bak",
+    "workflowTemplateFile" : "workflow.tpl",
+    "implementationTemplateFile" : "implementation.tpl",
+    "implementationConfigFile" : "implementation.json",
+    "metadataFile" : "metadata.tsv", 
+
+########reference#######
+    "refFile" : "ref.fa",
+
+#######analysis options######
+    "isContrast" : "true",
+    "useIntervalList" : "true",
+    "splitByContig" : "true",
+
+#######processor options#########
+    "target" : "sge", #sge, local, aws
+    "useThreads" : "true",
+    "numThreads" : 10,
+    "queue" : "bioinf.q"
+
+},
+  "contrast": {
+    "rule" : "crossProduct"  #groupWise, sampleWise
+
+  },
+
+  "workflow": {
+    "w1" : ["MapReads", "AddReadGroup"],
+    "w2" : ["SampleReads", "MapReads", "AddReadgroup", "Bamprocessing", "VariantDetection"]
+  }
+
+}

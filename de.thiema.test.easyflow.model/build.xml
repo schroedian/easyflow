@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Build file for our first application -->
+
+<project name="Ant test project" default="build" basedir=".">
+<property name="workspace.lib" value="../java/Lib/"/>
+
+
+
+<path id="build.classpath">
+		<fileset dir="${workspace.lib}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="../../.eclipse/org.eclipse.platform_3.6.1_946975857/plugins">
+			<include name="**/*.jar" />
+		</fileset>
+		
+</path>
+	
+<target name="build" >
+
+<javac srcdir="src" destdir="build" debug="true" classpathref="build.classpath"
+includes="**/*.java">
+	<classpath>
+				<pathelement location="${workspace.LIB}/jgrapht-0.8.2"/>
+				<pathelement location="~/.eclipse/org.eclipse.platform_3.6.1_946975857/plugins"/>
+	</classpath>
+</javac>
+</target>
+
+</project>

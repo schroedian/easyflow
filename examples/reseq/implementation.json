@@ -1,0 +1,26 @@
+{
+"gatk":
+{
+ "sep": " ", 
+ "is_named" : 1,
+ "BAM" : "-I",
+ "VCF" : "-V",
+ "interval_file" : "-L",
+ "fasta" : "-R"
+}
+
+"picard": 
+{
+ "SAM" : "SAM",
+ "BAM" : "I",
+ "sep": "=",
+ "is_named": 1
+}
+"samtools":
+{
+ "FASTQ": "",
+ "SAM": "",
+ "FASTA": ""
+ 
+}
+}
